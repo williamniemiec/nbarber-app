@@ -7,7 +7,8 @@ import {
   TouchableHighlight, 
   TextInput, 
   Platform, 
-  ActivityIndicator, 
+  ActivityIndicator,
+  Alert, 
   RefreshControl 
 } from 'react-native';
 import Style from './style';
@@ -16,18 +17,20 @@ import MyLocationIcon from '../../assets/my_location.svg';
 import { useNavigation } from '@react-navigation/native';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';
-import Api from '../../Api';
+import BarberService from '../../services/barber.service';
 import BarberItem from '../../components/BarberItem';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 export default () => {
-  const navigation = useNavigation();
-  const [location, setLocation] = useState('');
-  const [coords, setCoords] = useState(null);
+  const navigation = useNavigation<BottomTabNavigationProp<any>>();
+  const barberService = new BarberService();
+  const [location, setLocation] = useState<any>('');
+  const [coords, setCoords] = useState<any>(null);
   const [loading, setLoading] = useState(false);
-  const [barberList, setBarberList] = useState([]);
+  const [barberList, setBarberList] = useState<any>([]);
   const [refreshing, setRefreshing] = useState(false);
   
-  const handleChangeLocation = (text) => {
+  const handleChangeLocation = (text: string) => {
     setLocation(text);
     //setCoords({});
     //getBarbers();
@@ -68,7 +71,7 @@ export default () => {
       lng = coords.longitude;
     }
 
-    let res = await Api.getBarbers(lat, lng, location);
+    let res = await barberService.getBarbers(lat, lng, location);
     if (res.error == '') {
       if (res.loc)
         setLocation(res.loc);
@@ -76,7 +79,7 @@ export default () => {
       setBarberList(res.data);
     }
     else {
-      alert('Erro: ' + res.error);
+      Alert.alert('Erro: ' + res.error);
     }
 
     setLoading(false);
@@ -92,7 +95,7 @@ export default () => {
     getBarbers();
   }
 
-  const handleBarberItem = (barberData) => {
+  const handleBarberItem = (barberData: any) => {
     navigation.navigate('Barber', barberData);
   }
 
@@ -126,7 +129,7 @@ export default () => {
         }
 
         <View style={Style.listArea}>
-          {barberList.map((item, index) => (
+          {barberList.map((item: any, index: number) => (
             <BarberItem key={index} data={item} onPress={() => handleBarberItem(item)} />
           ))}
         </View>
