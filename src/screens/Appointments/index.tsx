@@ -11,12 +11,12 @@ import {
 import Style from './style';
 import AppointmentItem from '../../components/AppointmentItem';
 import {useNavigation} from '@react-navigation/native';
-import Api from '../../Api';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import UserService from '../../services/user.service';
 
 export default () => {
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
-
+  const userService = new UserService();
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [list, setList] = useState<any>([]);
@@ -35,7 +35,7 @@ export default () => {
     setLoading(true);
     setEmptyList(false);
 
-    const req = await Api.getAppointments();
+    const req = await userService.getAppointments();
 
     if (req.error) {
       Alert.alert('Error: ' + req.error);

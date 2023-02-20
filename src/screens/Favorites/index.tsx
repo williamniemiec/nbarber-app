@@ -12,10 +12,11 @@ import Style from './style';
 import BarberItem from '../../components/BarberItem';
 import {useNavigation} from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import Api from '../../Api';
+import UserService from '../../services/user.service';
 
 export default () => {
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
+  const userService = new UserService();
 
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -35,7 +36,7 @@ export default () => {
     setLoading(true);
     setEmptyList(false);
 
-    const req = await Api.getFavorites();
+    const req = await userService.getFavorites();
 
     if (req.error) {
       Alert.alert('Error: ' + req.error);

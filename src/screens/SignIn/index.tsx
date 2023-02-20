@@ -9,7 +9,6 @@ import SignInput from '../../components/SignInput';
 import SignMessageButton from '../../components/SignMessageButton';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
-import Api from '../../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthService from '../../services/auth.service';
 
