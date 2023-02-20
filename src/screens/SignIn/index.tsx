@@ -1,0 +1,77 @@
+import React, { useState, useContext } from 'react';
+import { SafeAreaView, View, Text, TouchableHighlight, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import Style from './style';
+import { UserContext } from '../../contexts/UserContext';
+import BarberLogo from '../../assets/barber.svg';
+import SignInput from '../../components/SignInput';
+import SignMessageButton from '../../components/SignMessageButton';
+import EmailIcon from '../../assets/email.svg';
+import LockIcon from '../../assets/lock.svg';
+import Api from '../../Api';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+export default () => {
+  const navigation = useNavigation<StackNavigationProp<any>>();
+  const { dispatch: userDispatch } = useContext(UserContext);
+
+  const [emailField, setEmailField] = useState('');
+  const [passwordField, setPasswordField] = useState('');
+
+  const handleChangeEmail = (text: string) => {
+    setEmailField(text);
+  };
+
+  const handleChangePassword = (text: string) => {
+    setPasswordField(text);
+  };
+
+  const handleSignUp = () => {
+    navigation.reset({
+      routes: [{name: 'SignUp'}]
+    });
+  }
+
+  const handleSignIn = async () => {
+    if (!emailField || !passwordField)
+      Alert.alert('Preencha todos os campos');
+    else {
+      let json = await Api.signIn(emailField, passwordField);
+
+      if (json.token) {
+        await AsyncStorage.setItem('token', json.token);
+        
+        userDispatch({
+          type: 'SET_AVATAR',
+          payload: {
+            avatar: json.data.avatar
+          }
+        });
+
+        navigation.reset({
+          routes: [{name: 'MainTab'}]
+        });
+      }
+      else {
+        Alert.alert('Email e/ou senha incorretos!');
+      }
+    }
+  }
+
+  return (
+    <SafeAreaView style={Style.container}>
+      <BarberLogo width='100%' height='160' />
+      
+      <View style={Style.inputArea}>
+        <SignInput placeholder='Email' Icon={EmailIcon} onChangeText={handleChangeEmail} value={emailField} />
+        <SignInput placeholder='Senha' Icon={LockIcon} secure={true} onChangeText={handleChangePassword} value={passwordField} />
+        <TouchableHighlight underlayColor='#ddd' style={Style.customButton} onPress={handleSignIn}>
+          <Text style={Style.customButtonText}>LOGIN</Text>
+        </TouchableHighlight>
+      </View>
+
+      <SignMessageButton message='Ainda não possui uma conta?' messageHighlighted='Cadastre-se' onPress={handleSignUp} />
+    </SafeAreaView>
+  );
+};
