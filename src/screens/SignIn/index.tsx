@@ -11,11 +11,13 @@ import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
 import Api from '../../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthService from '../../services/auth.service';
 
 export default () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const { dispatch: userDispatch } = useContext(UserContext);
 
+  const authService = new AuthService();
   const [emailField, setEmailField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
@@ -37,7 +39,7 @@ export default () => {
     if (!emailField || !passwordField)
       Alert.alert('Preencha todos os campos');
     else {
-      let json = await Api.signIn(emailField, passwordField);
+      let json = await authService.signIn(emailField, passwordField);
 
       if (json.token) {
         await AsyncStorage.setItem('token', json.token);

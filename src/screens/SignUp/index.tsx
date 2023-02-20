@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
-import { SafeAreaView, View, Text, TouchableHighlight } from 'react-native';
+import { SafeAreaView, View, Text, TouchableHighlight, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import Style from './style';
 import BarberLogo from '../../assets/barber.svg';
 import SignInput from '../../components/SignInput';
@@ -8,35 +9,36 @@ import SignMessageButton from '../../components/SignMessageButton';
 import PersonIcon from '../../assets/person.svg';
 import EmailIcon from '../../assets/email.svg';
 import LockIcon from '../../assets/lock.svg';
-import Api from '../../Api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from '../../contexts/UserContext';
+import AuthService from '../../services/auth.service';
 
 export default () => {
   const { dispatch: userDispatch } = useContext(UserContext);
-  const navigation = useNavigation();
+  const authService = new AuthService();
+  const navigation = useNavigation<StackNavigationProp<any>>();
 
   const [nameField, setNameField] = useState('');
   const [emailField, setEmailField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
-  const handleChangeName = (text) => {
+  const handleChangeName = (text: string) => {
     setNameField(text);
   };
 
-  const handleChangeEmail = (text) => {
+  const handleChangeEmail = (text: string) => {
     setEmailField(text);
   };
 
-  const handleChangePassword = (text) => {
+  const handleChangePassword = (text: string) => {
     setPasswordField(text);
   };
 
   const handleSignUp = async () => {
     if (!nameField || !emailField || !passwordField)
-      alert('Preencha todos os campos');
+    Alert.alert('Preencha todos os campos');
     else {
-      let json = await Api.signUp(nameField, emailField, passwordField);
+      let json = await authService.signUp(nameField, emailField, passwordField);
 
       if (json.token) {
         await AsyncStorage.setItem('token', json.token);
@@ -49,7 +51,7 @@ export default () => {
         });
       }
       else {
-        alert('Erro: ' + json.error);
+        Alert.alert('Erro: ' + json.error);
       }
     }
   }

@@ -2,15 +2,17 @@ import React from 'react';
 import { SafeAreaView, View, Text, TouchableHighlight } from 'react-native';
 import Style from './style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Api from '../../Api';
+import AuthService from '../../services/auth.service';
 import { useNavigation } from '@react-navigation/core';
+import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 export default () => {
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<BottomTabNavigationProp<any>>();
+  const authService = new AuthService();
 
   const handleLogout = async () => {
-    await Api.logout();
+    await authService.signOut();
     await AsyncStorage.removeItem('token');
 
     navigation.reset({

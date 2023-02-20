@@ -5,18 +5,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
 import BarberLogo from '../../assets/barber.svg';
 import Style from './style';
-import Api from '../../Api';
 import { UserContext } from '../../contexts/UserContext';
+import AuthService from '../../services/auth.service';
 
 export default () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const { dispatch: userDispatch } = useContext(UserContext);
+  const authService = new AuthService();
 
   const checkToken = async () => {
     const token = await AsyncStorage.getItem('token');
 
     if (token !== null) {
-      let json = await Api.checkToken(token);
+      let json = await authService.refreshToken(token);
 
       if (json.token) {
         await AsyncStorage.setItem('token', json.token);
