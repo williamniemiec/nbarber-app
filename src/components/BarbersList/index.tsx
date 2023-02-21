@@ -19,7 +19,7 @@ const BarbersList = ({ list, loading, onPress }: any) => {
         <BarberItem 
           key={index} 
           data={item} 
-          onPress={onPress} 
+          onPress={() => onPress(item)} 
         />
       ))}
     </View>

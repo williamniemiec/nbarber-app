@@ -1,96 +1,73 @@
-import React, {useState} from 'react';
-import {
-  SafeAreaView,
-  View,
-  Text,
-  TextInput,
-  ScrollView,
-  ActivityIndicator,
-  Alert
-} from 'react-native';
+import React, { useState } from 'react';
+import { SafeAreaView, ScrollView, Alert } from 'react-native';
 import Style from './style';
-import BarberItem from '../../components/BarberItem';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import BarberService from '../../services/barber.service';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import BarbersList from '../../components/BarbersList';
+import SearchBar from '../../components/SearchBar';
+
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
+const barberService = new BarberService();
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default () => {
-  const navigation = useNavigation<BottomTabNavigationProp<any>>();
+const SearchScreen = () => {
 
-  const barberService = new BarberService();
+  const navigation = useNavigation<BottomTabNavigationProp<any>>();
+  
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<any>([]);
-  const [emptyList, setEmptyList] = useState(true);
-
-  const searchBarbers = async () => {
-    setEmptyList(false);
-    setLoading(true);
-    setList([]);
-
-    if (searchText) {
-      const res = await barberService.search(searchText);
-
-      if (res.error) {
-        Alert.alert('Error: ', res.error);
-      }
-      else if (res.data && res.data.length > 0) {
-        setList(res.data);
-      }
-      else {
-        setEmptyList(true);
-      }
-    }
-
-    setLoading(false);
-  };
-
-  const handleBarberItem = (barberData: any) => {
-    navigation.navigate('Barber', barberData);
-  };
 
   return (
     <SafeAreaView style={Style.container}>
-      <View style={Style.searchArea}>
-        <TextInput
-          placeholder="Digite o nome do barbeiro"
-          placeholderTextColor="#ffffff"
-          value={searchText}
-          onChangeText={text => setSearchText(text)}
-          onEndEditing={searchBarbers}
-          returnKeyType="search"
-          autoFocus
-          selectTextOnFocus
-        />
-      </View>
-
+      <SearchBar
+        value={searchText}
+        placeholder='Digite o nome do barbeiro'
+        onChangeText={(text: string) => setSearchText(text)}
+        onEndEditing={() => searchBarbers(setLoading, setList, searchText)}
+      />
       <ScrollView style={Style.scroller}>
-        {loading && (
-          <ActivityIndicator
-            style={Style.loading}
-            size="large"
-            color="#000000"
-          />
-        )}
-
-        {emptyList && (
-          <Text style={Style.warning}>Nenhum barbeiro encontrado :/</Text>
-        )}
-
-        <View style={Style.listArea}>
-          {list.map((item: any, index: number) => (
-            <BarberItem
-              key={index}
-              data={item}
-              onPress={() => handleBarberItem(item)}
-            />
-          ))}
-        </View>
+        <BarbersList 
+          list={list}
+          loading={loading}
+          onPress={(item: any) => handleBarberItem(item, navigation)}
+        />
       </ScrollView>
     </SafeAreaView>
   );
 };
+
+export default SearchScreen;
+
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
+async function searchBarbers(setLoading: any, setList: any, searchText: string) {
+  setLoading(true);
+  setList([]);
+
+  if (searchText) {
+    const res = await barberService.search(searchText);
+
+    if (res.error) {
+      Alert.alert('Error: ', res.error);
+    }
+    else if (res.data && res.data.length > 0) {
+      setList(res.data);
+    }
+  }
+
+  setLoading(false);
+}
+
+function handleBarberItem(barberData: any, navigation: any) {
+  navigation.navigate('Barber', barberData);
+}
