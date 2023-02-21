@@ -7,7 +7,7 @@ import Style from './style';
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BackButton = ({ navigation }: any) => (
+const ArrowBackButton = ({ navigation }: any) => (
   <TouchableOpacity
     style={Style.backBtn}
     onPress={() => navigation.goBack()}
@@ -16,4 +16,4 @@ const BackButton = ({ navigation }: any) => (
   </TouchableOpacity>
 );
 
-export default BackButton;
+export default ArrowBackButton;

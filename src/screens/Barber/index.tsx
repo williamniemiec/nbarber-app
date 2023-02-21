@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, SafeAreaView } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import BackButton from '../../components/ArrowBackButton';
+import ArrowBackButton from '../../components/ArrowBackButton';
 import BarberDetails from '../../components/BarberDetails';
 import BarberModal from '../../components/BarberModal';
 import BarberService from '../../services/barber.service';
@@ -49,7 +49,7 @@ const BarberScreen = () => {
         loading={loading} 
         handleSchedule={(index: number) => handleSchedule(index, setSelectedService, setShowModal)}
       />
-      <BackButton navigation={navigation} />
+      <ArrowBackButton navigation={navigation} />
       <BarberModal
         show={showModal}
         setShow={setShowModal}
