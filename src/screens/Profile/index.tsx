@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, View, Text, TouchableHighlight } from 'react-native';
+import { SafeAreaView, Text, TouchableHighlight } from 'react-native';
 import Style from './style';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthService from '../../services/auth.service';
@@ -8,28 +8,42 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
 
 // ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
+const authService = new AuthService();
+
+
+// ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default () => {
+const ProfileScreen = () => {
 
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
-  const authService = new AuthService();
-
-  const handleLogout = async () => {
-    await authService.signOut();
-    await AsyncStorage.removeItem('token');
-
-    navigation.reset({
-      routes:[{name: 'SignIn'}]
-    });
-  };
 
   return (
     <SafeAreaView style={Style.container}>
-      <Text>Profile</Text>
-      <TouchableHighlight style={Style.logoutButton} onPress={handleLogout} underlayColor='#eee'>
+      <TouchableHighlight 
+        style={Style.logoutButton} 
+        onPress={() => handleLogout(navigation)} 
+        underlayColor='#eee'
+      >
         <Text>Logout</Text>
       </TouchableHighlight>
     </SafeAreaView>
   );
+};
+
+export default ProfileScreen;
+
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
+async function handleLogout(navigation: any) {
+  await authService.signOut();
+  await AsyncStorage.removeItem('token');
+
+  navigation.reset({
+    routes:[{name: 'SignIn'}]
+  });
 };
