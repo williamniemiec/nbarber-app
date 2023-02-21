@@ -3,7 +3,7 @@ import { SafeAreaView, View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { StackNavigationProp } from '@react-navigation/stack';
-import BarberLogo from '../../assets/barber.svg';
+import BarberLogo from '../../assets/images/svg/barber.svg';
 import Style from './style';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../../services/auth.service';

@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 import Style from './style'
-import StarFull from '../../assets/star.svg';
-import StarHalf from '../../assets/star_half.svg';
-import StarEmpty from '../../assets/star_empty.svg';
+import StarFull from '../../assets/images/svg/star.svg';
+import StarHalf from '../../assets/images/svg/star_half.svg';
+import StarEmpty from '../../assets/images/svg/star_empty.svg';
 
 export default ({stars, showNumber}: any) => {
   let s = [0, 0, 0, 0, 0]; // 0: empty; 1: half; 2: full

@@ -12,8 +12,8 @@ import {
   RefreshControl 
 } from 'react-native';
 import Style from './style';
-import SearchIcon from '../../assets/search.svg';
-import MyLocationIcon from '../../assets/my_location.svg';
+import SearchIcon from '../../assets/images/svg/search.svg';
+import MyLocationIcon from '../../assets/images/svg/my_location.svg';
 import { useNavigation } from '@react-navigation/native';
 import { request, PERMISSIONS } from 'react-native-permissions';
 import Geolocation from '@react-native-community/geolocation';

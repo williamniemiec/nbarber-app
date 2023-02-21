@@ -3,11 +3,10 @@ import Style from './style';
 import { Modal, TouchableOpacity, View, Image, Text, ScrollView, Alert } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import ExpandIcon from '../../assets/expand.svg';
-import NavPrevIcon from '../../assets/nav_prev.svg';
-import NavNextIcon from '../../assets/nav_next.svg';
+import ExpandIcon from '../../assets/images/svg/expand.svg';
+import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
+import NavNextIcon from '../../assets/images/svg/nav_next.svg';
 import style from '../../screens/Home/style';
-import Api from '../../Api';
 
 const DATE_ITEM_WIDTH = 45;
 const HOUR_ITEM_WIDTH = 65;

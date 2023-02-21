@@ -4,11 +4,11 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Style from './style';
 import { UserContext } from '../../contexts/UserContext';
-import BarberLogo from '../../assets/barber.svg';
+import BarberLogo from '../../assets/images/svg/barber.svg';
 import SignInput from '../../components/SignInput';
 import SignMessageButton from '../../components/SignMessageButton';
-import EmailIcon from '../../assets/email.svg';
-import LockIcon from '../../assets/lock.svg';
+import EmailIcon from '../../assets/images/svg/email.svg';
+import LockIcon from '../../assets/images/svg/lock.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthService from '../../services/auth.service';
 
