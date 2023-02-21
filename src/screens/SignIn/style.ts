@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
-import config from '../../config';
+import Theme from '../../assets/themes';
 
 export default StyleSheet.create({
     container:{
         flex:1,
         justifyContent:'center',
         alignItems:'center',
-        backgroundColor:config.colorAccent
+        backgroundColor:Theme.colorAccent
     },
     inputArea:{
         width:'100%',

@@ -4,12 +4,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import MainStack from './navigators/MainStack';
 import UserContextProvider from './contexts/UserContext';
 
-export default () => {
-  return (
-    <UserContextProvider>
-      <NavigationContainer>
-        <MainStack />
-      </NavigationContainer>
-    </UserContextProvider>
-  );
-};
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
+const App = () => (
+  <UserContextProvider>
+    <NavigationContainer>
+      <MainStack />
+    </NavigationContainer>
+  </UserContextProvider>
+);
+
+export default App;
