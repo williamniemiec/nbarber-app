@@ -34,8 +34,8 @@ const AppointmentsScreen = () => {
           <RefreshControl 
             refreshing={refreshing} 
             onRefresh={() => handleRefresh(setRefreshing, setLoading, setList)} 
-          />
-        }>
+          />}
+      >
         <AppointmentList list={list} loading={loading} />
       </ScrollView>
     </SafeAreaView>

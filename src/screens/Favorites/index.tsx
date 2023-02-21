@@ -1,62 +1,38 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
-  View,
-  Text,
-  ActivityIndicator,
-  Alert, 
-  RefreshControl,
-  ScrollView,
+  Alert,
+  RefreshControl, 
+  SafeAreaView, 
+  ScrollView, 
+  Text, 
+  View
 } from 'react-native';
-import Style from './style';
-import BarberItem from '../../components/BarberItem';
-import {useNavigation} from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import FavoritesList from '../../components/FavoritesList';
 import UserService from '../../services/user.service';
+import Style from './style';
+
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
+const userService = new UserService();
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default () => {
-  const navigation = useNavigation<BottomTabNavigationProp<any>>();
-  const userService = new UserService();
+const FavoritesScreen = () => {
 
+  const navigation = useNavigation<BottomTabNavigationProp<any>>();
+  
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [list, setList] = useState<any>([]);
-  const [emptyList, setEmptyList] = useState(true);
-
-  const handleBarberItem = (barberData: any) => {
-    navigation.navigate('Barber', barberData);
-  };
-
-  const handleRefresh = () => {
-    setRefreshing(false);
-    getFavorites();
-  };
-
-  const getFavorites = async () => {
-    setLoading(true);
-    setEmptyList(false);
-
-    const req = await userService.getFavorites();
-
-    if (req.error) {
-      Alert.alert('Error: ' + req.error);
-    } 
-    else if (req.data && req.data.length > 0) {
-      setList(req.data);
-    } 
-    else {
-      setEmptyList(true);
-    }
-
-    setLoading(false);
-  };
 
   useEffect(() => {
-    getFavorites();
+    getFavorites(setLoading, setList);
   }, []);
 
   return (
@@ -68,28 +44,47 @@ export default () => {
       <ScrollView
         style={Style.scroller}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }>
-        {loading && (
-          <ActivityIndicator
-            style={Style.loading}
-            size="large"
-            color="#000000"
-          />
-        )}
-
-        {emptyList && <Text style={Style.warning}>Nenhum favorito</Text>}
-
-        <View style={Style.listArea}>
-          {list.map((item: any, index: number) => (
-            <BarberItem
-              key={index}
-              data={item}
-              onPress={() => handleBarberItem(item)}
-            />
-          ))}
-        </View>
+          <RefreshControl 
+            refreshing={refreshing} 
+            onRefresh={() => handleRefresh(setRefreshing, setLoading, setList)} 
+          />}
+      >
+        <FavoritesList 
+          list={list} 
+          loading={loading} 
+          onPress={(item: any) => handleBarberItem(item, navigation)} 
+        />
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+export default FavoritesScreen;
+
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
+function handleBarberItem(barberData: any, navigation: any) {
+  navigation.navigate('Barber', barberData);
+};
+
+function handleRefresh(setRefreshing: any, setLoading: any, setList: any) {
+  setRefreshing(false);
+  getFavorites(setLoading, setList);
+};
+
+async function getFavorites(setLoading: any, setList: any) {
+  setLoading(true);
+
+  const req = await userService.getFavorites();
+
+  if (req.error) {
+    Alert.alert('Error: ' + req.error);
+  } 
+  else if (req.data && req.data.length > 0) {
+    setList(req.data);
+  }
+
+  setLoading(false);
 };
