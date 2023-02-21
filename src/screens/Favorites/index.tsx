@@ -14,6 +14,10 @@ import {useNavigation} from '@react-navigation/native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import UserService from '../../services/user.service';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
   const userService = new UserService();

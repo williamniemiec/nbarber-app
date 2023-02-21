@@ -1,57 +1,29 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  SafeAreaView,
-  View,
-  Text,
-  ActivityIndicator,
-  RefreshControl,
-  ScrollView,
-  Alert
+  Alert, RefreshControl, SafeAreaView, ScrollView
 } from 'react-native';
-import Style from './style';
-import AppointmentItem from '../../components/AppointmentItem';
-import {useNavigation} from '@react-navigation/native';
-import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import AppointmentList from '../../components/AppointmentList';
 import UserService from '../../services/user.service';
+import Style from './style';
 
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
+const userService = new UserService();
+
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
-  const navigation = useNavigation<BottomTabNavigationProp<any>>();
-  const userService = new UserService();
+
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
-  const [list, setList] = useState<any>([]);
-  const [emptyList, setEmptyList] = useState(true);
-
-  const handleBarberItem = (barberData: any) => {
-    navigation.navigate('Barber', barberData);
-  };
-
-  const handleRefresh = () => {
-    setRefreshing(false);
-    getAppointments();
-  };
-
-  const getAppointments = async () => {
-    setLoading(true);
-    setEmptyList(false);
-
-    const req = await userService.getAppointments();
-
-    if (req.error) {
-      Alert.alert('Error: ' + req.error);
-    } 
-    else if (req.data && req.data.length > 0) {
-      setList(req.data);
-    } 
-    else {
-      setEmptyList(true);
-    }
-
-    setLoading(false);
-  };
+  const [list, setList] = useState<any[]>([]);
 
   useEffect(() => {
-    getAppointments();
+    getAppointments(setLoading, setList);
   }, []);
 
   return (
@@ -59,24 +31,37 @@ export default () => {
       <ScrollView
         style={Style.scroller}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-        }>
-        {loading && (
-          <ActivityIndicator
-            style={Style.loading}
-            size="large"
-            color="#000000"
+          <RefreshControl 
+            refreshing={refreshing} 
+            onRefresh={() => handleRefresh(setRefreshing, setLoading, setList)} 
           />
-        )}
-
-        {emptyList && <Text style={Style.warning}>Não há agendamentos</Text>}
-
-        <View style={Style.listArea}>
-          {list.map((item: any, index: number) => (
-            <AppointmentItem key={index} data={item} />
-          ))}
-        </View>
+        }>
+        <AppointmentList list={list} loading={loading} />
       </ScrollView>
     </SafeAreaView>
   );
+};
+
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
+const handleRefresh = (setRefreshing: any, setLoading: any, setList: any) => {
+  setRefreshing(false);
+  getAppointments(setLoading, setList);
+};
+
+async function getAppointments(setLoading: any, setList: any) {
+  setLoading(true);
+
+  const req = await userService.getAppointments();
+
+  if (req.error) {
+    Alert.alert('Error: ' + req.error);
+  } 
+  else if (req.data && req.data.length > 0) {
+    setList(req.data);
+  }
+
+  setLoading(false);
 };

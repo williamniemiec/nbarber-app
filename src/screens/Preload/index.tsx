@@ -8,6 +8,10 @@ import Style from './style';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../../services/auth.service';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const { dispatch: userDispatch } = useContext(UserContext);

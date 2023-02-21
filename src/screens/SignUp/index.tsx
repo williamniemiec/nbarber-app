@@ -13,6 +13,10 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../../services/auth.service';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
   const { dispatch: userDispatch } = useContext(UserContext);
   const authService = new AuthService();

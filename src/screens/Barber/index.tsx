@@ -24,6 +24,10 @@ import BarberModal from '../../components/BarberModal';
 import BarberService from '../../services/barber.service';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
   const route: any = useRoute();

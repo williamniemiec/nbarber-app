@@ -12,6 +12,10 @@ import LockIcon from '../../assets/images/svg/lock.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AuthService from '../../services/auth.service';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
   const navigation = useNavigation<StackNavigationProp<any>>();
   const { dispatch: userDispatch } = useContext(UserContext);

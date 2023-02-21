@@ -21,6 +21,10 @@ import BarberService from '../../services/barber.service';
 import BarberItem from '../../components/BarberItem';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
   const barberService = new BarberService();

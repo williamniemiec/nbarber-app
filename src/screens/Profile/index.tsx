@@ -6,6 +6,10 @@ import AuthService from '../../services/auth.service';
 import { useNavigation } from '@react-navigation/core';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default () => {
 
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
