@@ -20,6 +20,10 @@ const daysWeek = [
   'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
 ];
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default ({show, setShow, user, service}: any) => {
 
   const navigation = useNavigation<BottomTabNavigationProp<any>>();

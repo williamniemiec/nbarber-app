@@ -5,6 +5,10 @@ import StarFull from '../../assets/images/svg/star.svg';
 import StarHalf from '../../assets/images/svg/star_half.svg';
 import StarEmpty from '../../assets/images/svg/star_empty.svg';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default ({stars, showNumber}: any) => {
   let s = [0, 0, 0, 0, 0]; // 0: empty; 1: half; 2: full
   let floorStar = Math.floor(stars);

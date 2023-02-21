@@ -5,6 +5,9 @@ import Service from "./service";
  * Responsible for providing user services.
  */
 class UserService extends Service {
+  async favorite(id: any) {
+    return null;
+  }
 
   async getFavorites() {
     /*const token = await AsyncStorage.getItem('token');

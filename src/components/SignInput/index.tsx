@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, TextInput } from 'react-native';
 import Style from './style';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default ({placeholder, onChangeText, Icon, secure, value}: any) => {
   return (
       <View style={Style.inputArea}>

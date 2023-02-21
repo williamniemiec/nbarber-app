@@ -16,7 +16,7 @@ const userService = new UserService();
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default () => {
+const AppointmentsScreen = () => {
 
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -41,6 +41,8 @@ export default () => {
     </SafeAreaView>
   );
 };
+
+export default AppointmentsScreen;
 
 
 // ----------------------------------------------------------------------------

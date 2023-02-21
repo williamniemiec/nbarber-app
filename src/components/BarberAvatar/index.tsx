@@ -1,13 +1,17 @@
 import React from 'react';
-import { View } from 'react-native';
+import { Image } from 'react-native';
 import Style from './style';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default ({active}: any) => {
-  return (
-    <View style={[Style.dot, active ? Style.active : null]}></View>
-  );
-};
+const BarberAvatar = ({ avatar }: any) => (
+  <Image
+    style={Style.userAvatar}
+    source={{uri: avatar}}
+    resizeMode="cover"
+  />
+);
+
+export default BarberAvatar;

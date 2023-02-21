@@ -2,6 +2,10 @@ import React from 'react';
 import { View, Text, Image } from 'react-native';
 import Style from './style';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default ({data}: any) => {
 
   const datetime = data.datetime.split(' ');

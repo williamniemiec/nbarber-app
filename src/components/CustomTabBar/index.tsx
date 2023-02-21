@@ -8,6 +8,10 @@ import TodayIcon from '../../assets/images/svg/today.svg';
 import FavoriteIcon from '../../assets/images/svg/favorite.svg';
 import AccountIcon from '../../assets/images/svg/account.svg';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default ({state, navigation}: any) => {
 
   const user = useContext(UserContext);

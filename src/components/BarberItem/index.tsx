@@ -3,6 +3,10 @@ import { View, Text, Image, TouchableHighlight, TouchableOpacity } from 'react-n
 import Style from './style';
 import Stars from '../Stars';
 
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
 export default ({data, onPress}: any) => {
 
   return (
