@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import AppointmentItem from '../../components/AppointmentItem';
+import AppointmentItem from '../../parts/AppointmentItem';
 import AppointmentListProps from '../../models/appointment-list-props.model';
 import LoadingSpinner from '../LoadingSpinner';
 import Style from './style';

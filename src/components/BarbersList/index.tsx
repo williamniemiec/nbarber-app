@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import BarberItem from '../../components/BarberItem';
+import BarberItem from '../../parts/BarberItem';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import Style from './style';
 

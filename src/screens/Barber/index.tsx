@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, SafeAreaView } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import ArrowBackButton from '../../components/ArrowBackButton';
+import ArrowBackButton from '../../parts/button/ArrowBackButton';
 import BarberDetails from '../../components/BarberDetails';
 import BarberModal from '../../components/BarberModal';
 import BarberService from '../../services/barber.service';

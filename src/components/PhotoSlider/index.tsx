@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, View } from 'react-native';
 import Swiper from 'react-native-swiper';
-import SwipeDot from '../../components/SwipeDot';
+import SwipeDot from '../../parts/SwipeDot';
 import Style from './style';
 
 

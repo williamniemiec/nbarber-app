@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import NavNextIcon from '../../assets/images/svg/nav_next.svg';
 import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
-import Stars from '../../components/Stars';
+import Stars from '../../parts/Stars';
 import Style from './style';
 
 

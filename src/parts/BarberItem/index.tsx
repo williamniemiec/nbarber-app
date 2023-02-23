@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, Text, Image, TouchableHighlight, TouchableOpacity } from 'react-native'
-import Style from './style';
+import { View, Text, Image, TouchableOpacity } from 'react-native'
 import Stars from '../Stars';
+import Style from './style';
 
 
 // ----------------------------------------------------------------------------

@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Style from './style';
 import BarberLogo from '../../assets/images/svg/barber.svg';
-import SignMessageButton from '../../components/SignMessageButton';
+import SignMessageButton from '../../parts/button/FormMessageButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../../services/auth.service';

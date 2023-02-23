@@ -2,7 +2,11 @@ import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import EmailIcon from '../../assets/images/svg/email.svg';
 import LockIcon from '../../assets/images/svg/lock.svg';
-import SignInput from '../../components/SignInput';
+import SignInput from '../../parts/input/FormInput';
+import EmailInput from '../../parts/input/EmailInput';
+import NameInput from '../../parts/input/NameInput';
+import PasswordInput from '../../parts/input/PasswordInput';
+import FormButton from '../../parts/button/FormButton';
 import Style from './style';
 
 
@@ -22,62 +26,8 @@ const SignUpForm = ({
     <NameInput nameField={nameField} setNameField={setNameField} />
     <EmailInput emailField={emailField} setEmailField={setEmailField} />
     <PasswordInput passwordField={passwordField} setPasswordField={setPasswordField} />
-    <SignUpButton onPress={onSignUp}/>
+    <FormButton onPress={onSignUp} title="CADASTRAR" />
   </View>
 );
 
 export default SignUpForm;
-
-const NameInput = ({ nameField, setNameField }: any) => (
-  <SignInput 
-    placeholder='Nome' 
-    Icon={EmailIcon} 
-    onChangeText={(text: string) => handleChangeName(text, setNameField)} 
-    value={nameField} 
-  />
-);
-
-const EmailInput = ({ emailField, setEmailField }: any) => (
-  <SignInput 
-    placeholder='Email' 
-    Icon={EmailIcon} 
-    onChangeText={(text: string) => handleChangeEmail(text, setEmailField)} 
-    value={emailField} 
-  />
-);
-
-const PasswordInput = ({ passwordField, setPasswordField }: any) => (
-  <SignInput 
-    placeholder='Senha' 
-    Icon={LockIcon} 
-    secure={true} 
-    onChangeText={(text: string) => handleChangePassword(text, setPasswordField)} 
-    value={passwordField} 
-  />
-);
-
-const SignUpButton = ({ onPress }: any) => (
-  <TouchableHighlight 
-    underlayColor='#ddd' 
-    style={Style.customButton} 
-    onPress={onPress}
-  >
-    <Text style={Style.customButtonText}>CADASTRAR</Text>
-  </TouchableHighlight>
-);
-
-
-// ----------------------------------------------------------------------------
-//         Functions
-// ----------------------------------------------------------------------------
-function handleChangeName(text: string, setNameField: any) {
-  setNameField(text);
-};
-
-function handleChangeEmail(text: string, setEmailField: any) {
-  setEmailField(text);
-};
-
-function handleChangePassword(text: string, setPasswordField: any) {
-  setPasswordField(text);
-};

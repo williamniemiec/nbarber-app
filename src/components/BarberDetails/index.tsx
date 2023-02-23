@@ -1,12 +1,11 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, Text, View } from 'react-native';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import Stars from '../../components/Stars';
-import BarberAvatar from '../BarberAvatar';
-import BarberName from '../BarberName';
+import FavoriteButton from '../../parts/button/FavoriteButton';
+import Stars from '../../parts/Stars';
+import BarberAvatar from '../../parts/barber/BarberAvatar';
 import BarberServices from '../BarberServices';
 import BarberTestimonials from '../BarberTestimonials';
-import FavoriteButton from '../FavoriteButton';
 import PhotoSlider from '../PhotoSlider';
 import Style from './style';
 
@@ -39,3 +38,9 @@ const BarberDetails = ({userInfo, favorited, handleFavorite, loading, handleSche
 }
 
 export default BarberDetails;
+
+const BarberName = ({ name }: any) => (
+  <Text style={Style.userInfoName}>
+    {name}
+  </Text>
+);
