@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import Style from './style';
-import { Modal, TouchableOpacity, View, Image, Text, ScrollView, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Alert, Modal, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import ExpandIcon from '../../assets/images/svg/expand.svg';
-import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
-import NavNextIcon from '../../assets/images/svg/nav_next.svg';
-import style from '../../screens/Home/style';
+import CloseButton from '../../parts/button/CloseButton';
+import FormButton from '../../parts/button/FormButton';
+import BarberModalAvailability from '../BarberModalAvailability';
+import BarberModalCalendar from '../BarberModalCalendar';
+import BarberModalHeader from '../BarberModalHeader';
+import BarberModalService from '../BarberModalService';
+import Style from './style';
 
-const DATE_ITEM_WIDTH = 45;
-const HOUR_ITEM_WIDTH = 65;
 
-const months = [
-  'January', 'February', 'March', 'April', 'May', 'June', 'July', 
-  'August', 'September', 'October', 'November', 'December'
-];
-
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
 const daysWeek = [
   'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
 ];
@@ -24,7 +22,7 @@ const daysWeek = [
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default ({show, setShow, user, service}: any) => {
+const BarberModal = ({ show, setShow, user, service }: any) => {
 
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
 
@@ -35,82 +33,6 @@ export default ({show, setShow, user, service}: any) => {
   const [listDays, setListDays] = useState([]);
   const [listHours, setListHours] = useState([]);
   const [indexOfSelectedHour, setIndexOfSelectedHour] = useState(0);
-
-  const handleCloseButton = () => {
-    setShow(false);
-  };
-
-  const CloseButton = () => (
-    <TouchableOpacity style={Style.closeButton} onPress={handleCloseButton}>
-      <ExpandIcon width='40' height='40' fill='#111111' />
-    </TouchableOpacity>
-  );
-
-  const ModalItem = ({children}: any) => (
-    <View style={Style.modalItem}>
-      {children}
-    </View>
-  );
-
-  const handleFinishButton = async () => {
-    if (hasAllRequiredFieldsProvided()) {
-      // const req = await Api.schedule(user.id, user.services[service].id, selectedYear, selectedMonth+1, selectedDay, selectedHour);
-      // if (req.error === '') {
-      setShow(false);
-      Alert.alert('Agendamento feito com sucesso!');
-      navigation.navigate('Appointments');
-      // }
-    }
-    else {
-      Alert.alert('Preencha todos os campos!');
-    }
-  };
-
-  const hasAllRequiredFieldsProvided = () => {
-    return  user.id
-            && (service != null)
-            && (selectedYear > 0)
-            && (selectedMonth > 0)
-            && (selectedDay > 0)
-            && (selectedHour != null)
-  };
-
-  const handlePrevMonth = () => {
-    const previousDate = selectedMonth - 1;
-
-    if (previousDate < 0) {
-      setSelectedMonth(11);
-      setSelectedYear(selectedYear - 1);
-    }
-    else {
-      setSelectedMonth(previousDate);
-    }
-
-    setSelectedDay(0);
-    setSelectedHour(null);
-    setIndexOfSelectedHour(0);
-  };
-
-  const handleNextMonth = () => {
-    const nextDate = selectedMonth + 1;
-
-    if (nextDate > 11) {
-      setSelectedMonth(0);
-      setSelectedYear(selectedYear + 1);
-    }
-    else {
-      setSelectedMonth(nextDate);
-    }
-
-    setSelectedDay(0);
-    setSelectedHour(null);
-    setIndexOfSelectedHour(0);
-  };
-
-  const handleSelectHour = (hour: any, index: number) => {
-    setSelectedHour(hour);
-    setIndexOfSelectedHour(index);
-  };
 
   useEffect(() => {
     const today = new Date();
@@ -184,76 +106,166 @@ export default ({show, setShow, user, service}: any) => {
   }, [selectedDay, show]);
 
   return (
-    <Modal
-      transparent={true}
-      visible={show}
-      animationType='slide'
-    >
+    <Modal transparent={true} visible={show} animationType='slide'>
       <View style={Style.modalArea}>
         <View style={Style.modalBody}>
-          <CloseButton />
-          <ModalItem>
-            <View style={Style.userInfo}>
-              <Image style={Style.userAvatar} source={{uri: user.avatar}} />
-              <Text style={Style.userName}>{user.name}</Text>
-            </View>
-          </ModalItem>
-
-          {service != null &&
-            <ModalItem>
-              <View style={Style.serviceInfo}>
-                <Text style={Style.serviceName}>{user.services[service].name}</Text>
-                <Text style={Style.servicePrice}>R$ {user.services[service].price.toFixed(2)}</Text>
-              </View>
-            </ModalItem>
-          }
-
-          <ModalItem>
-            <View style={Style.dateInfo}>
-              <TouchableOpacity style={Style.dataPrevArea} onPress={handlePrevMonth}>
-                <NavPrevIcon width='35' height='35' fill='#000000' />
-              </TouchableOpacity>
-              <Text style={Style.dateTitleArea}>{`${months[selectedMonth]} ${selectedYear}`}</Text>
-              <TouchableOpacity style={Style.dataNextArea} onPress={handleNextMonth}>
-                <NavNextIcon width='35' height='35' fill='#000000' />
-              </TouchableOpacity>
-            </View>
-
-            <ScrollView style={Style.dateList} horizontal={true} showsHorizontalScrollIndicator={false} contentOffset={{x:DATE_ITEM_WIDTH * selectedDay-1, y:0}}>
-              {listDays.map((item: any, index: number) => (
-                <TouchableOpacity key={index} style={Style.dateBtn} onPress={() => setSelectedDay(item.day)} disabled={!item.available}>
-                  <View style={[item.available ? Style.dateItem : Style.dateItemDisabled, (item.day == selectedDay) ? Style.active : null]}>
-                    <Text style={[Style.dateItemWeekDay, (item.day == selectedDay) ? Style.activeText : null]}>{item.weekday}</Text>
-                    <Text style={[Style.dateItemDay, (item.day == selectedDay) ? Style.activeText : null]}>{item.day}</Text>
-                  </View>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
-          </ModalItem>
-
-          {listHours.length > 0 &&
-            <ModalItem>
-              <ScrollView 
-                style={Style.timeList}
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                contentOffset={{x:HOUR_ITEM_WIDTH * indexOfSelectedHour, y:0}}
-              >
-                {listHours.map((item, index) => (
-                  <TouchableOpacity key={index} style={[Style.timeItem, (item == selectedHour) ? Style.active : null]} onPress={() => handleSelectHour(item, index)}>
-                    <Text style={[Style.timeItemText, (item == selectedHour) ? Style.activeText : null]}>{item}</Text>
-                  </TouchableOpacity>
-                ))}
-              </ScrollView>
-            </ModalItem>
-          }
-          
-          <TouchableOpacity style={Style.finishButton} onPress={handleFinishButton}>
-            <Text style={Style.finishButtonText}>Finalizar Agendamento</Text>
-          </TouchableOpacity>
+          <CloseButton onPress={() => setShow(false)} />
+          <BarberModalHeader user={user} />
+          <BarberModalService user={user} service={service} />
+          <BarberModalCalendar 
+            listDays={listDays}
+            month={selectedMonth} 
+            year={selectedYear}
+            day={selectedDay}
+            onSelectDay={setSelectedDay}
+            onPreviousMonth={() => handlePrevMonth(
+              selectedMonth,
+              selectedYear, 
+              setSelectedMonth,
+              setSelectedYear,
+              setSelectedDay,
+              setSelectedHour,
+              setIndexOfSelectedHour
+              )}
+              onNextMonth={() => handleNextMonth(
+                selectedMonth,
+                selectedYear, 
+                setSelectedMonth,
+                setSelectedYear,
+                setSelectedDay,
+                setSelectedHour,
+                setIndexOfSelectedHour
+              )}
+          />
+          <BarberModalAvailability 
+            listHours={listHours} 
+            hour={selectedHour} 
+            hourIndex={indexOfSelectedHour}
+            onSelectHour={(item: any, index: number) => handleSelectHour(
+              item, 
+              index, 
+              setSelectedHour, 
+              setIndexOfSelectedHour
+            )}
+          />
+          <FormButton 
+            title="Finalizar Agendamento" 
+            onPress={() => handleFinishButton(
+              user, 
+              service, 
+              selectedYear, 
+              selectedMonth, 
+              selectedDay, 
+              selectedHour, 
+              setShow, 
+              navigation
+            )} 
+          />
         </View>
       </View>
     </Modal>
   );
 }
 
+export default BarberModal;
+
+
+// ----------------------------------------------------------------------------
+//         Functions
+// ----------------------------------------------------------------------------
+async function handleFinishButton(
+  user: any, 
+  service: any, 
+  year: any, 
+  month: any, 
+  day: any, 
+  hour: any,
+  setShow: any,
+  navigation: any
+) {
+  if (hasAllRequiredFieldsProvided(user, service, year, month, day, hour)) {
+    // const req = await Api.schedule(user.id, user.services[service].id, selectedYear, selectedMonth+1, selectedDay, selectedHour);
+    // if (req.error === '') {
+    setShow(false);
+    Alert.alert('Agendamento feito com sucesso!');
+    navigation.navigate('Appointments');
+    // }
+  }
+  else {
+    Alert.alert('Preencha todos os campos!');
+  }
+};
+
+function hasAllRequiredFieldsProvided(
+  user: any, 
+  service: any, 
+  year: any, 
+  month: any, 
+  day: any, 
+  hour: any
+) {
+  return  user.id
+          && (service != null)
+          && (year > 0)
+          && (month > 0)
+          && (day > 0)
+          && (hour != null)
+};
+
+function handlePrevMonth(
+  selectedMonth: any, 
+  selectedYear: any, 
+  setSelectedMonth: any,
+  setSelectedYear: any,
+  setSelectedDay: any,
+  setSelectedHour: any,
+  setIndexOfSelectedHour: any,
+) {
+  const previousDate = selectedMonth - 1;
+
+  if (previousDate < 0) {
+    setSelectedMonth(11);
+    setSelectedYear(selectedYear - 1);
+  }
+  else {
+    setSelectedMonth(previousDate);
+  }
+
+  setSelectedDay(0);
+  setSelectedHour(null);
+  setIndexOfSelectedHour(0);
+};
+
+function handleNextMonth(
+  selectedMonth: any, 
+  selectedYear: any, 
+  setSelectedMonth: any,
+  setSelectedYear: any,
+  setSelectedDay: any,
+  setSelectedHour: any,
+  setIndexOfSelectedHour: any,
+) {
+  const nextDate = selectedMonth + 1;
+
+  if (nextDate > 11) {
+    setSelectedMonth(0);
+    setSelectedYear(selectedYear + 1);
+  }
+  else {
+    setSelectedMonth(nextDate);
+  }
+
+  setSelectedDay(0);
+  setSelectedHour(null);
+  setIndexOfSelectedHour(0);
+};
+
+function handleSelectHour(
+  hour: any, 
+  index: number, 
+  setHour: any, 
+  setIndex: any
+) {
+  setHour(hour);
+  setIndex(index);
+};

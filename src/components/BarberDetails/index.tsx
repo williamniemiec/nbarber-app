@@ -34,7 +34,7 @@ const BarberDetails = ({userInfo, favorited, handleFavorite, loading, handleSche
         <BarberTestimonials testimonials={userInfo.testimonials} />
       </View>
     </ScrollView>
-    );
+  );
 }
 
 export default BarberDetails;
