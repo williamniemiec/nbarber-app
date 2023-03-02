@@ -1,12 +1,9 @@
 import React from 'react';
-import { Text, TouchableHighlight, View } from 'react-native';
-import EmailIcon from '../../assets/images/svg/email.svg';
-import LockIcon from '../../assets/images/svg/lock.svg';
-import SignInput from '../../parts/input/FormInput';
+import { View } from 'react-native';
+import FormButton from '../../parts/button/FormButton';
 import EmailInput from '../../parts/input/EmailInput';
 import NameInput from '../../parts/input/NameInput';
 import PasswordInput from '../../parts/input/PasswordInput';
-import FormButton from '../../parts/button/FormButton';
 import Style from './style';
 
 
