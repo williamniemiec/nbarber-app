@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import BarberItem from '../../parts/BarberItem';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import BarberItem from '../../parts/barber/BarberItem';
 import Style from './style';
 
 
