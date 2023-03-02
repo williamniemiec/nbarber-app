@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Alert, RefreshControl, SafeAreaView, ScrollView
-} from 'react-native';
+import { Alert, RefreshControl, SafeAreaView, ScrollView } from 'react-native';
 import AppointmentList from '../../components/AppointmentList';
 import UserService from '../../services/user.service';
 import Style from './style';

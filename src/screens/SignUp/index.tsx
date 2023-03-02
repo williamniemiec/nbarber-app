@@ -8,7 +8,7 @@ import SignMessageButton from '../../parts/button/FormMessageButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from '../../contexts/UserContext';
 import AuthService from '../../services/auth.service';
-import SignUpForm from '../../components/SignUpForm';
+import SignUpForm from '../../components/form/SignUpForm';
 
 
 // ----------------------------------------------------------------------------

@@ -3,11 +3,11 @@ import { Alert, SafeAreaView } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import ArrowBackButton from '../../parts/button/ArrowBackButton';
-import BarberDetails from '../../components/BarberDetails';
-import BarberModal from '../../components/BarberModal';
 import BarberService from '../../services/barber.service';
 import UserService from '../../services/user.service';
 import Style from './style';
+import BarberDetails from '../../components/barber/BarberDetails';
+import BarberModal from '../../components/barber/BarberModal';
 
 
 // ----------------------------------------------------------------------------
