@@ -9,6 +9,7 @@ import BarberModalCalendar from '../BarberModalCalendar';
 import BarberModalHeader from '../BarberModalHeader';
 import BarberModalService from '../BarberModalService';
 import Style from './style';
+import BarberService from '../../services/barber.service';
 
 
 // ----------------------------------------------------------------------------
@@ -17,6 +18,7 @@ import Style from './style';
 const daysWeek = [
   'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
 ];
+const barberService = new BarberService();
 
 
 // ----------------------------------------------------------------------------
@@ -43,66 +45,37 @@ const BarberModal = ({ show, setShow, user, service }: any) => {
   }, []);
 
   useEffect(() => {
-    if (user.available == null)
+    if (user.available == null) {
       return;
-
-    const lastDayOfCurrentMonth = new Date(selectedYear, selectedMonth+1, 0).getDate();
-    const daysOfCurrentMonth: any = [];
-    let firstDayAvailable = 0;
-
-    for (let i = 1; i < lastDayOfCurrentMonth; i++) {
-      let currentDay = new Date(selectedYear, selectedMonth, i);
-
-      // Monta date para acessar availability do barber
-      let year = currentDay.getFullYear();
-      let month: any = currentDay.getMonth() + 1;
-      let day: any = currentDay.getDate();
-      month = (month < 10) ? '0' + month : month;
-      day = (day < 10) ? '0' + day : day;
-      let date = `${year}-${month}-${day}`;
-      let availability = user.available.filter((item: any) => item.date === date);
-
-      daysOfCurrentMonth.push({
-        available: availability.length > 0,
-        weekday: daysWeek[currentDay.getDay()],
-        day: i
-      });
-
-      if ((firstDayAvailable == 0) && (availability.length > 0))
-        firstDayAvailable = i;
     }
 
-    setListDays(daysOfCurrentMonth);
-    setSelectedDay(firstDayAvailable);
+    const availability = buildMonthlyAvailabilityList(user, selectedYear, selectedMonth);
+
+    setListDays(availability.daysOfCurrentMonth);
+    setSelectedDay(availability.firstDayAvailable);
     setListHours([]);
     setSelectedHour(null);
     setIndexOfSelectedHour(0);
   }, [selectedMonth, selectedYear, show]);
 
   useEffect(() => {
-    if (selectedDay == 0)
+    if ((selectedDay == 0) || (user.available == null)) {
       return;
+    }
 
-    if (user.available == null)
-      return;
+    const availability = buildDayAvailability(
+      user, 
+      selectedYear, 
+      selectedMonth, 
+      selectedDay
+    );
 
-      let currentDay = new Date(selectedYear, selectedMonth, selectedDay);
+    if (availability.length > 0) {
+      setListHours(availability[0].hours);
+    }
 
-      // Monta date para acessar availability do barber
-      let year = currentDay.getFullYear();
-      let month: any = currentDay.getMonth() + 1;
-      let day: any = currentDay.getDate();
-      month = (month < 10) ? '0' + month : month;
-      day = (day < 10) ? '0' + day : day;
-      let date = `${year}-${month}-${day}`;
-      let availability = user.available.filter((item: any) => item.date === date);
-
-      if (availability.length > 0) {
-        setListHours(availability[0].hours);
-      }
-
-      setSelectedHour(null);
-      setIndexOfSelectedHour(0);
+    setSelectedHour(null);
+    setIndexOfSelectedHour(0);
   }, [selectedDay, show]);
 
   return (
@@ -173,6 +146,46 @@ export default BarberModal;
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
+function buildMonthlyAvailabilityList(user: any, year: number, month: number) {
+  const lastDayOfCurrentMonth = new Date(year, month+1, 0).getDate();
+  const daysOfCurrentMonth: any = [];
+  let firstDayAvailable = 0;
+
+  for (let i = 1; i < lastDayOfCurrentMonth; i++) {
+    const currentDay = new Date(year, month, i);
+    const date = formatDateToIsoFormat(currentDay);
+    const availability = user.available.filter((item: any) => item.date === date);
+
+    daysOfCurrentMonth.push({
+      available: availability.length > 0,
+      weekday: daysWeek[currentDay.getDay()],
+      day: i
+    });
+
+    if ((firstDayAvailable == 0) && (availability.length > 0))
+      firstDayAvailable = i;
+  }
+
+  return { daysOfCurrentMonth, firstDayAvailable };
+}
+
+function formatDateToIsoFormat(date: Date) {
+  let year = date.getFullYear();
+  let month: any = date.getMonth() + 1;
+  let day: any = date.getDate();
+
+  month = (month < 10) ? '0' + month : month;
+  day = (day < 10) ? '0' + day : day;
+  
+  return `${year}-${month}-${day}`;
+}
+
+function buildDayAvailability(user: any, year: number, month: number, day: number) {
+  const date = formatDateToIsoFormat(new Date(year, month, day));
+  
+  return user.available.filter((item: any) => item.date === date);
+}
+
 async function handleFinishButton(
   user: any, 
   service: any, 
@@ -184,12 +197,20 @@ async function handleFinishButton(
   navigation: any
 ) {
   if (hasAllRequiredFieldsProvided(user, service, year, month, day, hour)) {
-    // const req = await Api.schedule(user.id, user.services[service].id, selectedYear, selectedMonth+1, selectedDay, selectedHour);
-    // if (req.error === '') {
-    setShow(false);
-    Alert.alert('Agendamento feito com sucesso!');
-    navigation.navigate('Appointments');
-    // }
+    const req: any = await barberService.schedule(
+      user.id, 
+      user.services[service].id, 
+      year, 
+      month+1, 
+      day, 
+      hour
+    );
+    
+    if (req && req.error === '') {
+      setShow(false);
+      Alert.alert('Agendamento feito com sucesso!');
+      navigation.navigate('Appointments');
+    }
   }
   else {
     Alert.alert('Preencha todos os campos!');
