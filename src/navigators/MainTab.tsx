@@ -7,9 +7,17 @@ import Favorites from '../screens/Favorites';
 import Profile from '../screens/Profile';
 import CustomTabBar from '../components/CustomTabBar';
 
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
 const Tab = createBottomTabNavigator();
 
-export default () => {
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
+const MainTab = () => {
   return (
     <Tab.Navigator 
       screenOptions={{headerShown: false}}
@@ -24,3 +32,4 @@ export default () => {
   );
 };
 
+export default MainTab;

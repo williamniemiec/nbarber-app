@@ -6,9 +6,17 @@ import SignUp from '../screens/SignUp';
 import MainTab from './MainTab';
 import Barber from '../screens/Barber';
 
+
+// ----------------------------------------------------------------------------
+//         Constants
+// ----------------------------------------------------------------------------
 const Stack = createStackNavigator();
 
-export default () => (
+
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
+const MainStack = () => (
   <Stack.Navigator
     screenOptions={{headerShown: false}}
     initialRouteName='Preload'
@@ -20,3 +28,5 @@ export default () => (
     <Stack.Screen name='Barber' component={Barber} />
   </Stack.Navigator>
 );
+
+export default MainStack;

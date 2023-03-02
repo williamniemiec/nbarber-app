@@ -10,11 +10,11 @@ import Geolocation from '@react-native-community/geolocation';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { PERMISSIONS, request } from 'react-native-permissions';
-import BarberSearchBar from '../../components/BarberSearchBar';
-import BarbersList from '../../components/BarbersList';
 import SearchHeader from '../../components/SearchHeader';
 import BarberService from '../../services/barber.service';
 import Style from './style';
+import BarberSearchBar from '../../components/barber/BarberSearchBar';
+import BarbersList from '../../components/barber/BarbersList';
 
 
 // ----------------------------------------------------------------------------
