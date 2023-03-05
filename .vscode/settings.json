@@ -1,3 +1,5 @@
 {
-    "java.compile.nullAnalysis.mode": "disabled"
+    "java.compile.nullAnalysis.mode": "disabled",
+    "editor.tabSize": 2,
+    "prolog.format.tabSize": 2
 }

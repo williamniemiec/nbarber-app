@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import AppointmentItem from '../../parts/AppointmentItem';
+import AppointmentItem from '../AppointmentItem';
 import AppointmentListProps from '../../models/appointment-list-props.model';
 import LoadingSpinner from '../LoadingSpinner';
 import Style from './style';
@@ -22,7 +22,12 @@ const AppointmentList = ({ list, loading }: AppointmentListProps) => {
   return (
     <View style={Style.listArea}>
       {list.map((item: any, index: number) => (
-        <AppointmentItem key={index} data={item} />
+        <AppointmentItem 
+          key={index} 
+          barber={item.barber} 
+          dateTime={item.datetime} 
+          service={item.service} 
+        />
       ))}
     </View>
   );

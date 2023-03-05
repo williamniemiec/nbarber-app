@@ -1,21 +1,28 @@
 import React from 'react';
 import { ScrollView, Text, View } from 'react-native';
-import LoadingSpinner from '../../components/LoadingSpinner';
-import FavoriteButton from '../../parts/button/FavoriteButton';
-import Stars from '../../parts/Stars';
-import BarberAvatar from '../../parts/barber/BarberAvatar';
 import BarberServices from '../BarberServices';
 import BarberTestimonials from '../BarberTestimonials';
-import PhotoSlider from '../PhotoSlider';
 import Style from './style';
+import Stars from '../../../parts/Stars';
+import BarberAvatar from '../../../parts/barber/BarberAvatar';
+import FavoriteButton from '../../../parts/button/FavoriteButton';
+import LoadingSpinner from '../../LoadingSpinner';
+import PhotoSlider from '../../PhotoSlider';
+import BarberDetailsProps from '../../../models/barber-details-props.model';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BarberDetails = ({userInfo, favorited, handleFavorite, loading, handleSchedule}: any) => {
+const BarberDetails = ({
+  userInfo, 
+  favorited, 
+  handleFavorite, 
+  loading, 
+  handleSchedule
+}: BarberDetailsProps) => {
   if (loading) {
-    return <LoadingSpinner />
+    return (<LoadingSpinner />);
   }
 
   return (
