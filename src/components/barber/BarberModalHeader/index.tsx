@@ -1,18 +1,19 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-import ModalItem from '../../parts/ModalItem';
 import Style from './style';
+import ModalItem from '../../../parts/ModalItem';
+import BarberProps from '../../../models/barber-proprs.model';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BarberModalHeader = ({ user }: any) => (
+const BarberModalHeader = ({ barber }: BarberProps) => (
   <ModalItem>
     <View style={Style.userInfo}>
-      <Image style={Style.userAvatar} source={{uri: user.avatar}} />
+      <Image style={Style.userAvatar} source={{uri: barber.avatar}} />
       <Text style={Style.userName}>
-        { user.name }
+        { barber.name }
       </Text>
     </View>
   </ModalItem>

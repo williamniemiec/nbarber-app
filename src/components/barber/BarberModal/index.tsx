@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Modal, View } from 'react-native';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import { useNavigation } from '@react-navigation/native';
-import CloseButton from '../../parts/button/CloseButton';
-import FormButton from '../../parts/button/FormButton';
+import { useNavigation, NavigationProp } from '@react-navigation/native';
 import BarberModalAvailability from '../BarberModalAvailability';
 import BarberModalCalendar from '../BarberModalCalendar';
 import BarberModalHeader from '../BarberModalHeader';
 import BarberModalService from '../BarberModalService';
 import Style from './style';
-import BarberService from '../../services/barber.service';
+import BarberService from '../../../services/barber.service';
+import CloseButton from '../../../parts/button/CloseButton';
+import FormButton from '../../../parts/button/FormButton';
+import BarberModalProps from '../../../models/barber-modal-props.model';
+import ScheduleDay from '../../../models/schedule-day.model';
+import BarberDto from '../../../dto/barber.dto';
 
 
 // ----------------------------------------------------------------------------
@@ -24,15 +27,15 @@ const barberService = new BarberService();
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BarberModal = ({ show, setShow, user, service }: any) => {
+const BarberModal = ({ show, setShow, barber, serviceIndex }: BarberModalProps) => {
 
   const navigation = useNavigation<BottomTabNavigationProp<any>>();
 
-  const [selectedYear, setSelectedYear] = useState(0);
-  const [selectedMonth, setSelectedMonth] = useState(0);
-  const [selectedDay, setSelectedDay] = useState(0);
-  const [selectedHour, setSelectedHour] = useState(null);
-  const [listDays, setListDays] = useState([]);
+  const [selectedYear, setSelectedYear] = useState<number>(0);
+  const [selectedMonth, setSelectedMonth] = useState<number>(0);
+  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedHour, setSelectedHour] = useState<string | null>(null);
+  const [listDays, setListDays] = useState<ScheduleDay[]>([]);
   const [listHours, setListHours] = useState([]);
   const [indexOfSelectedHour, setIndexOfSelectedHour] = useState(0);
 
@@ -45,11 +48,11 @@ const BarberModal = ({ show, setShow, user, service }: any) => {
   }, []);
 
   useEffect(() => {
-    if (user.available == null) {
+    if (barber.availability == null) {
       return;
     }
 
-    const availability = buildMonthlyAvailabilityList(user, selectedYear, selectedMonth);
+    const availability = buildMonthlyAvailabilityList(barber, selectedYear, selectedMonth);
 
     setListDays(availability.daysOfCurrentMonth);
     setSelectedDay(availability.firstDayAvailable);
@@ -59,12 +62,12 @@ const BarberModal = ({ show, setShow, user, service }: any) => {
   }, [selectedMonth, selectedYear, show]);
 
   useEffect(() => {
-    if ((selectedDay == 0) || (user.available == null)) {
+    if ((selectedDay == 0) || (barber.availability == null)) {
       return;
     }
 
     const availability = buildDayAvailability(
-      user, 
+      barber, 
       selectedYear, 
       selectedMonth, 
       selectedDay
@@ -83,8 +86,8 @@ const BarberModal = ({ show, setShow, user, service }: any) => {
       <View style={Style.modalArea}>
         <View style={Style.modalBody}>
           <CloseButton onPress={() => setShow(false)} />
-          <BarberModalHeader user={user} />
-          <BarberModalService user={user} service={service} />
+          <BarberModalHeader barber={barber} />
+          <BarberModalService barber={barber} serviceIndex={serviceIndex} />
           <BarberModalCalendar 
             listDays={listDays}
             month={selectedMonth} 
@@ -124,8 +127,8 @@ const BarberModal = ({ show, setShow, user, service }: any) => {
           <FormButton 
             title="Finalizar Agendamento" 
             onPress={() => handleFinishButton(
-              user, 
-              service, 
+              barber, 
+              serviceIndex, 
               selectedYear, 
               selectedMonth, 
               selectedDay, 
@@ -146,15 +149,15 @@ export default BarberModal;
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
-function buildMonthlyAvailabilityList(user: any, year: number, month: number) {
+function buildMonthlyAvailabilityList(barber: BarberDto, year: number, month: number) {
   const lastDayOfCurrentMonth = new Date(year, month+1, 0).getDate();
-  const daysOfCurrentMonth: any = [];
-  let firstDayAvailable = 0;
+  const daysOfCurrentMonth: ScheduleDay[] = [];
+  let firstDayAvailable: number = 0;
 
   for (let i = 1; i < lastDayOfCurrentMonth; i++) {
     const currentDay = new Date(year, month, i);
     const date = formatDateToIsoFormat(currentDay);
-    const availability = user.available.filter((item: any) => item.date === date);
+    const availability = barber.availability.filter((item: any) => item.date === date);
 
     daysOfCurrentMonth.push({
       available: availability.length > 0,
@@ -187,19 +190,19 @@ function buildDayAvailability(user: any, year: number, month: number, day: numbe
 }
 
 async function handleFinishButton(
-  user: any, 
-  service: any, 
-  year: any, 
-  month: any, 
-  day: any, 
-  hour: any,
-  setShow: any,
-  navigation: any
+  barber: BarberDto, 
+  serviceIndex: number, 
+  year: number, 
+  month: number, 
+  day: number, 
+  hour: string | null,
+  setShow: (value: boolean) => void,
+  navigation: NavigationProp<any, any>
 ) {
-  if (hasAllRequiredFieldsProvided(user, service, year, month, day, hour)) {
+  if (hasAllRequiredFieldsProvided(barber, serviceIndex, year, month, day, hour)) {
     const req: any = await barberService.schedule(
-      user.id, 
-      user.services[service].id, 
+      barber.id, 
+      barber.services[serviceIndex].id, 
       year, 
       month+1, 
       day, 
@@ -218,15 +221,15 @@ async function handleFinishButton(
 };
 
 function hasAllRequiredFieldsProvided(
-  user: any, 
-  service: any, 
-  year: any, 
-  month: any, 
-  day: any, 
-  hour: any
+  barber: BarberDto, 
+  serviceIndex: number, 
+  year: number, 
+  month: number, 
+  day: number, 
+  hour: string | null
 ) {
-  return  user.id
-          && (service != null)
+  return  barber.id
+          && (serviceIndex != null)
           && (year > 0)
           && (month > 0)
           && (day > 0)
@@ -234,13 +237,13 @@ function hasAllRequiredFieldsProvided(
 };
 
 function handlePrevMonth(
-  selectedMonth: any, 
-  selectedYear: any, 
-  setSelectedMonth: any,
-  setSelectedYear: any,
-  setSelectedDay: any,
-  setSelectedHour: any,
-  setIndexOfSelectedHour: any,
+  selectedMonth: number, 
+  selectedYear: number, 
+  setSelectedMonth: (value: number) => void,
+  setSelectedYear: (value: number) => void,
+  setSelectedDay: (value: number) => void,
+  setSelectedHour: (value: string | null) => void,
+  setIndexOfSelectedHour: (value: number) => void,
 ) {
   const previousDate = selectedMonth - 1;
 
@@ -258,13 +261,13 @@ function handlePrevMonth(
 };
 
 function handleNextMonth(
-  selectedMonth: any, 
-  selectedYear: any, 
-  setSelectedMonth: any,
-  setSelectedYear: any,
-  setSelectedDay: any,
-  setSelectedHour: any,
-  setIndexOfSelectedHour: any,
+  selectedMonth: number, 
+  selectedYear: number, 
+  setSelectedMonth: (value: number) => void,
+  setSelectedYear: (value: number) => void,
+  setSelectedDay: (value: number) => void,
+  setSelectedHour: (value: string | null) => void,
+  setIndexOfSelectedHour: (value: number) => void,
 ) {
   const nextDate = selectedMonth + 1;
 
@@ -282,10 +285,10 @@ function handleNextMonth(
 };
 
 function handleSelectHour(
-  hour: any, 
+  hour: string | null, 
   index: number, 
-  setHour: any, 
-  setIndex: any
+  setHour: (value: string | null) => void,
+  setIndex: (value: number) => void,
 ) {
   setHour(hour);
   setIndex(index);

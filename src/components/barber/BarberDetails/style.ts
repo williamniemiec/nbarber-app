@@ -1,153 +1,28 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
-    container:{
-        flex:1,
-        backgroundColor:'white'
-    },
-    scroller:{
-        flex:1
-    },
 
-
-
-    swiperCarrosel:{
-        height:240
-    },
-    swipeItem:{
-        flex:1,
-        backgroundColor:'#63c2d1'
-    },
-    swipeImage:{
-        width:'100%',
-        height:240
-    },
-    fakeSwiper:{
-        backgroundColor:'#4eadbe',
-        height:240,
-    },
-
-
-
-    pageBody:{
-        backgroundColor:'#ffffff',
-        borderTopLeftRadius:50,
-        minHeight:400,
-        marginTop:-50
-    },
-    userInfoArea:{
-        flexDirection:'row',
-        marginTop:-30
-    },
-    userAvatar:{
-        width:110,
-        height:110,
-        borderRadius:20,
-        marginLeft:30,
-        marginRight:20,
-        borderWidth:4,
-        borderColor:'#ffffff',
-    },
-    userInfo:{
-        flex:1,
-        justifyContent:'flex-end'
-    },
-    userInfoName:{
-        color:'#000000',
-        fontSize:18,
-        fontWeight:'bold',
-        marginBottom:10
-    },
-    userFavButton:{
-        width:40,
-        height:40,
-        backgroundColor:'#ffffff',
-        borderRadius:20,
-        borderColor:'#ffffff',
-        borderWidth:2,
-        justifyContent:'center',
-        alignItems:'center',
-        marginTop:15,
-        marginRight:15
-    },
-    
-
-    backBtn:{
-        position:'absolute',
-        top:0,
-        left:0
-    },
-    loading:{
-        marginTop:50
-    },
-    title:{
-        fontSize:18,
-        fontWeight:'bold',
-        color:'#268596',
-        marginLeft:30,
-        marginBottom:20
-    },
-    serviceArea:{
-        paddingHorizontal:30,
-        marginTop:30
-    },
-    serviceItem:{
-        flexDirection:'row',
-        marginBottom:20
-    },
-    serviceInfo:{
-        flex:1
-    },
-    serviceName:{
-        fontWeight:'bold',
-        fontSize:16,
-        color:'#268596'
-    },
-    servicePrice:{
-        fontSize:14,
-        color:'#268596'
-    },
-    serviceChooseBtn:{
-        backgroundColor:'#268596',
-        borderRadius:10,
-        paddingVertical:10,
-        paddingHorizontal:15
-    },
-    serviceChooseBtnText:{
-        color:'white',
-        fontWeight:'bold',
-        fontSize:14
-    },
-
-
-    swiperPpt:{
-        height: 240
-    },
-    testimonialArea:{
-        marginTop:30,
-        height:110,
-        marginBottom:50
-    },
-    testimonialItem:{
-        backgroundColor:'#268596',
-        padding:15,
-        borderRadius:10,
-        height:110,
-        justifyContent:'center',
-        marginHorizontal:50,
-    },
-    testimonialInfo:{
-        flexDirection:'row',
-        justifyContent:'space-between',
-        marginBottom:5
-    },
-    testimonialInfoName:{
-        color:'white',
-        fontSize:14,
-        fontWeight:'bold'
-    },
-    testimonialBody:{
-        fontSize:13,
-        color:'white'
-    }
+  scroller: {
+    flex: 1
+  },
+  pageBody: {
+    backgroundColor: '#ffffff',
+    borderTopLeftRadius: 50,
+    minHeight: 400,
+    marginTop: -50
+  },
+  userInfoArea: {
+    flexDirection: 'row',
+    marginTop: -30
+  },
+  userInfo: {
+    flex: 1,
+    justifyContent: 'flex-end'
+  },
+  userInfoName: {
+    color: '#000000',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10
+  }
 });

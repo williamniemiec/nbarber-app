@@ -2,8 +2,9 @@ import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import NavNextIcon from '../../assets/images/svg/nav_next.svg';
 import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
-import ModalItem from '../../parts/ModalItem';
 import Style from './style';
+import ModalItem from '../../../parts/ModalItem';
+import BarberModalCalendarProps from '../../../models/barber-modal-calendar-props.model';
 
 
 // ----------------------------------------------------------------------------
@@ -28,7 +29,7 @@ const BarberModalCalendar = ({
   onSelectDay,
   onPreviousMonth,
   onNextMonth
-}: any) => {
+}: BarberModalCalendarProps) => {
   if (!listDays) {
     return (<></>);
   }
@@ -59,7 +60,7 @@ const BarberModalCalendar = ({
         showsHorizontalScrollIndicator={false} 
         contentOffset={{x:DATE_ITEM_WIDTH * day-1, y:0}}
       >
-        {listDays.map((item: any, index: number) => (
+        {listDays.map((item, index) => (
           <TouchableOpacity 
             key={index} 
             style={Style.dateBtn} 

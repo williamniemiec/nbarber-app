@@ -1,14 +1,15 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import ModalItem from '../../parts/ModalItem';
 import Style from './style';
+import BarberModalServiceProps from '../../../models/barber-modal-service-props.model';
+import ModalItem from '../../../parts/ModalItem';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BarberModalService = ({ user, service }: any) => {
-  if (!service) {
+const BarberModalService = ({ barber, serviceIndex }: BarberModalServiceProps) => {
+  if (!serviceIndex) {
     return (<></>);
   }
 
@@ -16,10 +17,10 @@ const BarberModalService = ({ user, service }: any) => {
     <ModalItem>
       <View style={Style.serviceInfo}>
         <Text style={Style.serviceName}>
-          {user.services[service].name}
+          {barber.services[serviceIndex].name}
         </Text>
         <Text style={Style.servicePrice}>
-          R$ {user.services[service].price.toFixed(2)}
+          R$ {barber.services[serviceIndex].price.toFixed(2)}
         </Text>
       </View>
     </ModalItem>

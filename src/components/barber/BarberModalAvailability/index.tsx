@@ -1,7 +1,8 @@
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity } from 'react-native';
-import ModalItem from '../../parts/ModalItem';
 import Style from './style';
+import ModalItem from '../../../parts/ModalItem';
+import BarberModalAvailabilityProps from '../../../models/barber-modal-availability-props.model';
 
 
 // ----------------------------------------------------------------------------
@@ -18,7 +19,7 @@ const BarberModalAvailability = ({
   hour, 
   hourIndex,
   onSelectHour
-}: any) => {
+}: BarberModalAvailabilityProps) => {
   if (!listHours) {
     return (<></>);
   }
@@ -31,7 +32,7 @@ const BarberModalAvailability = ({
         showsHorizontalScrollIndicator={false}
         contentOffset={{x:HOUR_ITEM_WIDTH * hourIndex, y:0}}
       >
-        {listHours.map((item: any, index: number) => (
+        {listHours.map((item, index) => (
           <TouchableOpacity 
             key={index} 
             style={[Style.timeItem, (item == hour) ? Style.active : null]} 

@@ -21,7 +21,7 @@ const AppointmentList = ({ list, loading }: AppointmentListProps) => {
 
   return (
     <View style={Style.listArea}>
-      {list.map((item: any, index: number) => (
+      {list.map((item, index) => (
         <AppointmentItem 
           key={index} 
           barber={item.barber} 
