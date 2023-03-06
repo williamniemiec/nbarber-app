@@ -1,8 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import FormButton from '../../parts/button/FormButton';
-import EmailInput from '../../parts/input/EmailInput';
-import PasswordInput from '../../parts/input/PasswordInput';
+import SignInFormProps from '../../../models/sign-in-form-props.model';
+import FormButton from '../../../parts/button/FormButton';
+import EmailInput from '../../../parts/input/EmailInput';
+import PasswordInput from '../../../parts/input/PasswordInput';
 import Style from './style';
 
 
@@ -10,15 +11,15 @@ import Style from './style';
 //         Components
 // ----------------------------------------------------------------------------
 const SignInForm = ({
-  emailField,
-  setEmailField,
-  passwordField,
-  setPasswordField,
+  email,
+  setEmail,
+  password,
+  setPassword,
   onSignIn
-}: any) => (
+}: SignInFormProps) => (
   <View style={Style.inputArea}>
-    <EmailInput emailField={emailField} setEmailField={setEmailField} />
-    <PasswordInput passwordField={passwordField} setPasswordField={setPasswordField} />
+    <EmailInput email={email} setEmail={setEmail} />
+    <PasswordInput password={password} setPassword={setPassword} />
     <FormButton onPress={onSignIn} title="LOGAR" />
   </View>
 );

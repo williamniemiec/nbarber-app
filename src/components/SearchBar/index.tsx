@@ -1,12 +1,18 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
+import SearchBarProps from '../../models/search-bar-props.model';
 import Style from './style';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const SearchBar = ({ onTextChange, onEndEditing, value, placeholder }: any) => (
+const SearchBar = ({ 
+  onTextChange, 
+  onEndEditing, 
+  value, 
+  placeholder 
+}: SearchBarProps) => (
   <View style={Style.searchArea}>
     <TextInput
       placeholder={placeholder}

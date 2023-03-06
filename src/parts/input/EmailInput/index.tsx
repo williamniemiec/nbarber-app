@@ -6,12 +6,12 @@ import EmailIcon from '../../assets/images/svg/email.svg';
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const EmailInput = ({ emailField, setEmailField }: any) => (
+const EmailInput = ({ email, setEmail }: any) => (
   <SignInput 
     placeholder='Email' 
     Icon={EmailIcon} 
-    onChangeText={setEmailField} 
-    value={emailField} 
+    onChangeText={setEmail} 
+    value={email} 
   />
 );
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
+import SignUpFormProps from '../../../models/sign-uo-form-props.model';
 import FormButton from '../../../parts/button/FormButton';
 import EmailInput from '../../../parts/input/EmailInput';
 import NameInput from '../../../parts/input/NameInput';
@@ -11,18 +12,18 @@ import Style from './style';
 //         Components
 // ----------------------------------------------------------------------------
 const SignUpForm = ({
-  nameField,
-  setNameField,
-  emailField,
-  setEmailField,
-  passwordField,
-  setPasswordField,
+  name,
+  setName,
+  email,
+  setEmail,
+  password,
+  setPassword,
   onSignUp
-}: any) => (
+}: SignUpFormProps) => (
   <View style={Style.inputArea}>
-    <NameInput nameField={nameField} setNameField={setNameField} />
-    <EmailInput emailField={emailField} setEmailField={setEmailField} />
-    <PasswordInput passwordField={passwordField} setPasswordField={setPasswordField} />
+    <NameInput name={name} setName={setName} />
+    <EmailInput email={email} setEmail={setEmail} />
+    <PasswordInput password={password} setPassword={setPassword} />
     <FormButton onPress={onSignUp} title="CADASTRAR" />
   </View>
 );

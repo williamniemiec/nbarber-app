@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import FavoritesListProps from '../../models/favorites-list-props.model';
 import BarberItem from '../../parts/barber/BarberItem';
 import Style from './style';
 
@@ -8,7 +9,7 @@ import Style from './style';
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const FavoritesList = ({ list, loading, onPress }: any) => {
+const FavoritesList = ({ list, loading, onPress }: FavoritesListProps) => {
   if (loading) {
     return (<LoadingSpinner />);
   }
@@ -19,7 +20,7 @@ const FavoritesList = ({ list, loading, onPress }: any) => {
 
   return (
     <View style={Style.listArea}>
-      {list.map((item: any, index: number) => (
+      {list.map((item, index) => (
         <BarberItem
           key={index}
           data={item}

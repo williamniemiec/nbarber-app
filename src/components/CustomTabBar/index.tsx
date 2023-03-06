@@ -9,12 +9,13 @@ import FavoriteIcon from '../../assets/images/svg/favorite.svg';
 import CenteredTabButton from '../../parts/button/CenteredTabButton';
 import TabButton from '../../parts/button/TabButton';
 import ProfileTabIcon from '../../parts/ProfileTabIcon';
+import TabBarProps from '../../models/tab-bar-props.model';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const CustomTabBar = ({ state, navigation }: any) => {
+const CustomTabBar = ({ state, navigation }: TabBarProps) => {
 
   const user = useContext(UserContext);
 

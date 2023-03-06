@@ -1,13 +1,14 @@
 import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
 import SearchIcon from '../../assets/images/svg/search.svg';
+import SearchHeaderProps from '../../models/search-header-props.model';
 import Style from './style';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const SearchHeader = ({ title, onPress }: any) => (
+const SearchHeader = ({ title, onPress }: SearchHeaderProps) => (
   <View style={Style.headerArea}>
     <Text style={Style.headerTitle} numberOfLines={2}>
       { title }
