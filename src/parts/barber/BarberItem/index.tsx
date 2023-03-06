@@ -1,26 +1,25 @@
 import React from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native'
-import Stars from '../Stars';
+import BarberItemProps from '../../../models/barber-item-props.model';
+import Stars from '../../Stars';
 import Style from './style';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-export default ({data, onPress}: any) => {
+const BarberItem = ({ barber, onPress }: BarberItemProps) => (
 
-  return (
-    <TouchableOpacity style={Style.area} onPress={onPress}>
-      <Image style={Style.avatar} source={{uri: data.avatar}} />
-      <View style={Style.infoArea}>
-        <Text style={Style.userName}>{data.name}</Text>
-        
-        <Stars stars={data.stars} showNumber={true} />
-        
-        <View style={Style.seeProfileButton}>
-          <Text style={Style.seeProfileButtonText}>Ver perfil</Text>
-        </View>
+  <TouchableOpacity style={Style.area} onPress={onPress}>
+    <Image style={Style.avatar} source={{uri: barber.avatar}} />
+    <View style={Style.infoArea}>
+      <Text style={Style.userName}>{barber.name}</Text>
+      <Stars stars={barber.stars} showNumber={true} />
+      <View style={Style.seeProfileButton}>
+        <Text style={Style.seeProfileButtonText}>Ver perfil</Text>
       </View>
-    </TouchableOpacity>
-  );
-}
+    </View>
+  </TouchableOpacity>
+);
+
+export default BarberItem;

@@ -23,7 +23,7 @@ const FavoritesList = ({ list, loading, onPress }: FavoritesListProps) => {
       {list.map((item, index) => (
         <BarberItem
           key={index}
-          data={item}
+          barber={item}
           onPress={() => onPress(item)}
         />
       ))}

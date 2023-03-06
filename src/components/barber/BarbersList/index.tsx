@@ -19,7 +19,7 @@ const BarbersList = ({ list, loading, onPress }: BarbersListProps) => {
       {list.map((item, index) => (
         <BarberItem 
           key={index} 
-          data={item} 
+          barber={item} 
           onPress={() => onPress(item)} 
         />
       ))}
