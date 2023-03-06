@@ -1,17 +1,19 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
+import TestimonialsProps from '../../../models/testimonials-props.model';
+import Stars from '../../../parts/Stars';
 import NavNextIcon from '../../assets/images/svg/nav_next.svg';
 import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
-import Stars from '../../parts/Stars';
 import Style from './style';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BarberTestimonials = ({ testimonials }: any) => {
-  if (!testimonials && testimonials.length === 0) {
+const BarberTestimonials = ({ testimonials }: TestimonialsProps) => {
+
+  if (!testimonials || testimonials.length === 0) {
     return (<></>);
   }
 

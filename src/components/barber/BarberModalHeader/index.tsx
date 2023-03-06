@@ -2,7 +2,7 @@ import React from 'react';
 import { Image, Text, View } from 'react-native';
 import Style from './style';
 import ModalItem from '../../../parts/ModalItem';
-import BarberProps from '../../../models/barber-proprs.model';
+import BarberProps from '../../../models/barber-props.model';
 
 
 // ----------------------------------------------------------------------------

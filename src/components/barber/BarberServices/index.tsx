@@ -1,12 +1,13 @@
 import React from 'react';
 import { Text, TouchableHighlight, View } from 'react-native';
+import BarberServicesProps from '../../../models/barber-services-props.model';
 import Style from './style';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const BarberServices = ({ services, handleSchedule }: any) => {
+const BarberServices = ({ services, handleSchedule }: BarberServicesProps) => {
   if (!services) {
     return (<></>);
   }
@@ -14,7 +15,7 @@ const BarberServices = ({ services, handleSchedule }: any) => {
   return (
     <View style={Style.serviceArea}>
       <Text style={Style.title}>Lista de serviços</Text>
-      {services.map((item: any, index: number) => (
+      {services.map((item, index) => (
         <View style={Style.serviceItem} key={index}>
           <View style={Style.serviceInfo}>
             <Text style={Style.serviceName}>{item.name}</Text>
