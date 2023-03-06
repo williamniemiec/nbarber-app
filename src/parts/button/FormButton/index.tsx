@@ -1,9 +1,13 @@
 import React from 'react';
 import { Text, TouchableHighlight } from 'react-native';
 import Style from './style';
+import FormButtonProps from '../../../models/form-button-props.model';
 
 
-const FormButton = ({ onPress, title }: any) => (
+// ----------------------------------------------------------------------------
+//         Components
+// ----------------------------------------------------------------------------
+const FormButton = ({ onPress, title }: FormButtonProps) => (
   <TouchableHighlight 
     underlayColor='#ddd' 
     style={Style.customButton} 

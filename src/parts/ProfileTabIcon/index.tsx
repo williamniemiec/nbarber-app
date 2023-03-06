@@ -2,12 +2,13 @@ import React from 'react';
 import { Image } from 'react-native';
 import Style from './style';
 import AccountIcon from '../../assets/images/svg/account.svg';
+import ProfileTabIconProps from '../../models/profile-tab-icon-props.model';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const ProfileTabIcon = ({ avatar, selected }: any) => {
+const ProfileTabIcon = ({ avatar, selected }: ProfileTabIconProps) => {
   if (!avatar) {
     return (
       <AccountIcon 

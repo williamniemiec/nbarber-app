@@ -3,12 +3,13 @@ import { TouchableOpacity } from 'react-native';
 import FavoriteIcon from '../../assets/images/svg/favorite.svg';
 import FavoriteFullIcon from '../../assets/images/svg/favorite_full.svg';
 import Style from './style';
+import FavoriteButtonProps from '../../../models/favorite-button-props.model';
 
 
 // ----------------------------------------------------------------------------
 //         Components
 // ----------------------------------------------------------------------------
-const FavoriteButton = ({ handleFavorite, favorited }: any) => (
+const FavoriteButton = ({ handleFavorite, favorited }: FavoriteButtonProps) => (
   <TouchableOpacity
     style={Style.userFavButton}
     onPress={handleFavorite}>
