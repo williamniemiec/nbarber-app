@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React, { useState, useContext } from 'react';
 import { SafeAreaView, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -33,12 +40,12 @@ const SignUpScreen = () => {
     <SafeAreaView style={Style.container}>
       <BarberLogo width='100%' height='160' />
       <SignUpForm 
-        nameField={nameField}
-        setNameField={setNameField}
-        emailField={emailField}
-        setEmailField={setEmailField}
-        passwordField={passwordField}
-        setPasswordField={setPasswordField}
+        name={nameField}
+        setName={setNameField}
+        email={emailField}
+        setEmail={setEmailField}
+        password={passwordField}
+        setPassword={setPasswordField}
         onSignUp={() => handleSignUp(
           navigation, nameField, emailField, passwordField, userDispatch
         )}

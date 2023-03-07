@@ -1,6 +1,13 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React from 'react';
 import { View } from 'react-native';
-import SignUpFormProps from '../../../models/sign-uo-form-props.model';
+import SignUpFormProps from '../../../models/sign-up-form-props.model';
 import FormButton from '../../../parts/button/FormButton';
 import EmailInput from '../../../parts/input/EmailInput';
 import NameInput from '../../../parts/input/NameInput';

@@ -1,3 +1,10 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React from 'react';
 import { View, Text } from 'react-native';
 import Style from './style'
@@ -15,7 +22,7 @@ const Stars = ({ stars, showNumber }: StarsProps) => {
   return (
     <View style={Style.starArea}>
       {starsRate.map((item, index) => (
-        <View style={Style.starView} key={index}>
+        <View key={index}>
           <Star percent={item} />
         </View>
       ))}

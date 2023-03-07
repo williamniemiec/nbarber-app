@@ -1,11 +1,18 @@
+/*
+ * Copyright (c) William Niemiec.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
 import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, Alert } from 'react-native';
 import Style from './style';
 import { useNavigation } from '@react-navigation/native';
 import BarberService from '../../services/barber.service';
 import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
-import BarbersList from '../../components/BarbersList';
 import SearchBar from '../../components/SearchBar';
+import BarbersList from '../../components/barber/BarbersList';
 
 
 // ----------------------------------------------------------------------------
@@ -30,7 +37,7 @@ const SearchScreen = () => {
       <SearchBar
         value={searchText}
         placeholder='Digite o nome do barbeiro'
-        onChangeText={(text: string) => setSearchText(text)}
+        onTextChange={text => setSearchText(text)}
         onEndEditing={() => searchBarbers(setLoading, setList, searchText)}
       />
       <ScrollView style={Style.scroller}>
