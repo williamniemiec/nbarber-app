@@ -7,8 +7,8 @@
 
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import NavNextIcon from '../../assets/images/svg/nav_next.svg';
-import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
+import NavNextIcon from '../../../assets/images/svg/nav_next.svg';
+import NavPrevIcon from '../../../assets/images/svg/nav_prev.svg';
 import Style from './style';
 import ModalItem from '../../../parts/ModalItem';
 import BarberModalCalendarProps from '../../../models/barber-modal-calendar-props.model';

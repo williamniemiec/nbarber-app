@@ -7,7 +7,7 @@
 
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import ExpandIcon from '../../assets/images/svg/expand.svg';
+import ExpandIcon from '../../../assets/images/svg/expand.svg';
 import Style from './style';
 import CloseButtonProps from '../../../models/close-button-props.model';
 

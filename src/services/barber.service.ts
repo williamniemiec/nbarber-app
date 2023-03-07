@@ -14,6 +14,10 @@ import Service from "./service";
  */
 class BarberService extends Service {
 
+  constructor() {
+    super('');
+  }
+
   async getBarbers(lat = null, lng = null, city = null) {
     const token = await AsyncStorage.getItem('token');
     /*const req = await fetch(`${BASE_API}/barbers?token=${token}&lat=${lat}&lng=${lng}&city=${city}`);

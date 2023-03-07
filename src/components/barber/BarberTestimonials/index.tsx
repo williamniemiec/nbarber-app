@@ -10,8 +10,8 @@ import { Text, View } from 'react-native';
 import Swiper from 'react-native-swiper';
 import TestimonialsProps from '../../../models/testimonials-props.model';
 import Stars from '../../../parts/Stars';
-import NavNextIcon from '../../assets/images/svg/nav_next.svg';
-import NavPrevIcon from '../../assets/images/svg/nav_prev.svg';
+import NavNextIcon from '../../../assets/images/svg/nav_next.svg';
+import NavPrevIcon from '../../../assets/images/svg/nav_prev.svg';
 import Style from './style';
 
 

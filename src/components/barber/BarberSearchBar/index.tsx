@@ -8,7 +8,7 @@
 import React from 'react';
 import { TextInput, TouchableHighlight, View } from 'react-native';
 import BarberSearchBarProps from '../../../models/barber-search-bar-props.model';
-import MyLocationIcon from '../../assets/images/svg/my_location.svg';
+import MyLocationIcon from '../../../assets/images/svg/my_location.svg';
 import Style from './style';
 
 

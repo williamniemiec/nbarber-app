@@ -7,8 +7,8 @@
 
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
-import FavoriteIcon from '../../assets/images/svg/favorite.svg';
-import FavoriteFullIcon from '../../assets/images/svg/favorite_full.svg';
+import FavoriteIcon from '../../../assets/images/svg/favorite.svg';
+import FavoriteFullIcon from '../../../assets/images/svg/favorite_full.svg';
 import Style from './style';
 import FavoriteButtonProps from '../../../models/favorite-button-props.model';
 

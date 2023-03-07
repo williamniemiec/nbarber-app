@@ -13,6 +13,11 @@ import Service from "./service";
  * Responsible for providing user services.
  */
 class UserService extends Service {
+
+  constructor() {
+    super('');
+  }
+
   async favorite(id: any) {
     return null;
   }

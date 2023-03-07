@@ -14,6 +14,10 @@ import Service from "./service";
  */
 class AuthService extends Service {
 
+  constructor() {
+    super('auth');
+  }
+
   async signIn(email: string, password: string) {
     /*const req = await fetch(`${BASE_API}/auth/login`, {
         method:'POST',
