@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import BarberSearchResultDto from "../dto/barber-search-result.dto";
+import BarberDto from "../dto/barber.dto";
 import Service from "./service";
 
 
@@ -14,196 +15,55 @@ import Service from "./service";
  */
 class BarberService extends Service {
 
+  // --------------------------------------------------------------------------
+  //         Constructor
+  // --------------------------------------------------------------------------
   constructor() {
-    super('');
-  }
-
-  async getBarbers(lat = null, lng = null, city = null) {
-    const token = await AsyncStorage.getItem('token');
-    /*const req = await fetch(`${BASE_API}/barbers?token=${token}&lat=${lat}&lng=${lng}&city=${city}`);
-    const json = await req.json();
-
-    return json;*/
-    console.log('lat: ' + lat);
-    console.log('lg: ' + lng);
-    console.log('city: ' + city);
-
-    if (token)
-      return {
-        loc: city ? city : 'Porto Alegre',
-        error: '',
-        data: [
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 5,
-            name: 'Fulano',
-            stars: 3.5
-          },
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 6,
-            name: 'Fulano2',
-            stars: 2.0
-          },
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 7,
-            name: 'Fulano3',
-            stars: 4.7
-          },
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 8,
-            name: 'Fulano4',
-            stars: 5.0
-          },
-        ]
-      };
-
-    return { token: null, error: 'Unknown error', data: null };
+    super('barber');
   }
 
 
+  // --------------------------------------------------------------------------
+  //         Methods
+  // --------------------------------------------------------------------------
+  async getBarbers(lat = null, lng = null, city = null): Promise<BarberDto[]> {
+    const response = await this.get(`list?latitude=${lat}&longitude=${lng}&city=${city}`);
 
-  async getBarber(id: number) {
-    const token = await AsyncStorage.getItem('token');
-
-    /*const req = await fetch(`${BASE_API}/barber/${id}token=${token}`);
-
-    const json = await req.json();
-    return json;*/
-
-    if (token)
-      return {
-        error: '',
-        data: {
-          available: [
-            {
-              date: '2021-06-23',
-              hours: ['09:00', '09:30', '10:30', '11:00', '11:30', '12:00', '16:00']
-            },
-            {
-              date: '2021-06-24',
-              hours: ['10:30', '11:00', '11:30', '12:00', '13:30', '16:00']
-            },
-            {
-              date: '2021-06-25',
-              hours: ['09:00', '11:00', '11:30', '15:00']
-            }
-          ],
-          avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-          favorited: false,
-          id: 13,
-          name: 'Fulano',
-          photos: [
-            {
-              url: 'https://www.betterteam.com/images/barber-job-description-5184x3456-20201124.jpeg?crop=40:21,smart&width=1200&dpr=2'
-            },
-            {
-              url: 'https://i2-prod.manchestereveningnews.co.uk/incoming/article21411590.ece/ALTERNATES/s615/0_gettyimages-1207048163-170667a.jpg'
-            }
-          ],
-          services: [
-            {
-              name: 'Corte de cabelo + barba',
-              price: 20
-            },
-            {
-              name: 'Corte de cabelo',
-              price: 15
-            },
-            {
-              name: 'Barba',
-              price: 10
-            }
-          ],
-          stars: 3.4,
-          testimonials: [
-            {
-              name: 'Rápido e bom',
-              rate: 5,
-              body: 'Além de simpático, atendeu de forma bem rápida. Adorei'
-            },
-            {
-              name: 'Bom',
-              rate: 4,
-              body: 'Recomendo'
-            },
-            {
-              name: 'Cheio',
-              rate: 3.5,
-              body: 'Bom cabelereiro mas o lugar está sempre cheio :/'
-            }
-          ]
-        }
-      };
-
-    return { token: null, error: 'Unknown error', data: null };
+    return response.json();
   }
 
-  async schedule(userId: any, service: any, selectedYear: any, selectedMonth: any, selectedDay: any, selectedHour: any) {
-    const token = await AsyncStorage.getItem('token');
-    return null;
-    // const req = await fetch(`${BASE_API}/barber/${userId}/appointment`, {
-    //     method: 'POST',
-    //     headers: {
-    //         Accept: 'application/json',
-    //         'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify({
-    //         token, 
-    //         service, 
-    //         year: selectedYear, 
-    //         month: selectedMonth, 
-    //         day: selectedDay, 
-    //         hour: selectedHour
-    //     })
-    // });
+  async getBarber(id: number): Promise<BarberDto> {
+    const response = await this.get(`${id}`);
 
-    // const json = await req.json();
-    // return json;
+    return response.json();
   }
 
-  async search(barberName: string) {
-    /*const token = await AsyncStorage.getItem('token');
-    const req = await fetch(`${BASE_API}/search?q=${barberName}&token=${token}`);
-    const json = await req.json();
-    return json;*/
+  async schedule(
+    userId: number, 
+    service: number, 
+    year: number, 
+    month: number, 
+    day: number, 
+    hour: string
+  ): Promise<void> {
+    const response = await this.post(
+      {
+        service,
+        year,
+        month,
+        day,
+        hour
+      }, 
+      `${userId}/appointment`
+    );
 
-    const token = await AsyncStorage.getItem('token');
+    return response.json();
+  }
 
-    if (token)
-      return {
-        error: '',
-        data: [
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 5,
-            name: 'Fulano',
-            stars: 3.5
-          },
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 6,
-            name: 'Fulano2',
-            stars: 2.0
-          },
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 7,
-            name: 'Fulano3',
-            stars: 4.7
-          },
-          {
-            avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-            id: 8,
-            name: 'Fulano4',
-            stars: 5.0
-          },
-        ]
-      };
+  async search(barberName: string): Promise<BarberSearchResultDto> {
+    const response = await this.get(`search?q=${barberName}`);
 
-    return { token: null, error: 'Unknown error', data: null };
+    return response.json();
   }
 }
 

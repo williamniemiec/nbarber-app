@@ -7,6 +7,7 @@
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Service from "./service";
+import UserDto from "../dto/user.dto";
 
 
 /**
@@ -14,112 +15,49 @@ import Service from "./service";
  */
 class AuthService extends Service {
 
+  // --------------------------------------------------------------------------
+  //         Constructor
+  // --------------------------------------------------------------------------
   constructor() {
     super('auth');
   }
 
-  async signIn(email: string, password: string) {
-    /*const req = await fetch(`${BASE_API}/auth/login`, {
-        method:'POST',
-        headers:{
-            Accept:'application/json',
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({email, password})
-    });
 
-    const json = await req.json();
-    return json;*/
-    if (email === 'fulano@gmail.com' && password == '12345')
-      return {
-        error: '',
-        token: 'abcd',
-        data: {
-          id: 4,
-          name: 'Fulano',
-          avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-        }
-      };
+  // --------------------------------------------------------------------------
+  //         Methods
+  // --------------------------------------------------------------------------
+  async signIn(email: string, password: string): Promise<UserDto> {
+    const response = await this.post({email, password}, 'signin');
+    const loggedUser = await response.json();
 
-    return { token: null };
+    AsyncStorage.setItem('token', loggedUser.access_token);
+
+    return loggedUser.user;
   }
 
-  async signUp(name: string, email: string, password: string) {
-    /*const req = await fetch(`${BASE_API}/auth/signup`, {
-        method:'POST',
-        headers:{
-            Accept:'application/json',
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({name, email, password})
-    });
+  async signUp(name: string, email: string, password: string): Promise<void> {
+    const response = await this.post({name, email, password}, 'signup');
 
-    const json = await req.json();
-    return json;*/
+    const createdUser = await response.json();
 
-    if (name && email && password)
-      return {
-        token: 'abcd',
-        error: '',
-        data: {
-          id: 4,
-          name: 'Fulano',
-          avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-        }
-      };
+    AsyncStorage.setItem('token', createdUser.access_token);
 
-    return { token: null, error: 'Unknown error' };
+    return createdUser.json();
   }
 
-  async signOut() {
-    const token = await AsyncStorage.getItem('token');
-    /*const req = await fetch(`${BASE_API}/auth/logout`, {
-        method:'POST',
-        headers:{
-            Accept:'application/json',
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({token})
-    });
+  async signOut(): Promise<void> {
+    const response = await this.post({}, 'signout');
+    
+    AsyncStorage.removeItem('token');
 
-    const json = await req.json();
-    return json;*/
-
-    if (token)
-      return {
-        error: ''
-      };
-
-    return { error: 'Unknown error' };
+    return response.json();
   }
 
-  // manda token atual e recebe um novo token
-  async refreshToken(token: string) {
-    /*const req = await fetch(`${BASE_API}/auth/refresh`, {
-        method:'POST',
-        headers:{
-            Accept:'application/json',
-            'Content-Type':'application/json'
-        },
-        body:JSON.stringify({token})
-    });
+  async refreshToken(): Promise<void> {
+    const response = await this.get('refresh');
+    const newToken = await response.json();
 
-    const json = await req.json();
-    return json;*/
-
-    if (token)
-      return {
-        token: 'abcdef',
-        error: '',
-        data: {
-          id: 4,
-          name: 'Fulano',
-          avatar: 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png',
-        }
-      };
-
-    return { token: null, error: 'Unknown error', data: null };
-  }
+    AsyncStorage.setItem('token', newToken.access_token);  }
 }
 
 export default AuthService;

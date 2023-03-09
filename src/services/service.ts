@@ -1,3 +1,5 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 /*
  * Copyright (c) William Niemiec.
  *
@@ -18,6 +20,7 @@ abstract class Service {
   // ------------------------------------------------------------------------
   protected readonly api: string;
   private readonly uri: string;
+  private token?: string | null;
 
 
   // ------------------------------------------------------------------------
@@ -26,14 +29,19 @@ abstract class Service {
   protected constructor(uri: string) {
     this.api = ApiConfig.BASE_URL;
     this.uri = uri;
+    AsyncStorage.getItem('token').then(token => this.token = token);
   }
 
 
   // ------------------------------------------------------------------------
   //         Methods
   // ------------------------------------------------------------------------
-  get(id: number, path?: string): Promise<Response> {
-    return fetch(`${this.buildUrl(path)}/${id}`);
+  protected getById(id: number, path?: string): Promise<Response> {
+    return fetch(`${this.buildUrl(path)}/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
+    });
   }
 
   private buildUrl(path?: string) {
@@ -44,29 +52,44 @@ abstract class Service {
     return `${this.api}/${this.uri}/${path}`;
   }
 
-  post(data: any, path?: string): Promise<Response> {
+  protected get(path?: string): Promise<Response> {
+    return fetch(`${this.buildUrl(path)}`);
+  }
+
+  protected post(data: any, path?: string): Promise<Response> {
     return fetch(`${this.buildUrl(path)}`, {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }
 
-  put(id: number, data: any, path?: string): Promise<Response> {
-    return fetch(`${this.buildUrl(path)}/${id}`, {
+  protected put(data: any, id?: number, path?: string): Promise<Response> {
+    let url = `${this.buildUrl(path)}`;
+
+    if (id) {
+      url += `/${id}`;
+    }
+
+    return fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
+        'Authorization': `Bearer ${this.token}`
       }
     });
   }
 
-  delete(id: number, path?: string): Promise<Response> {
+  protected delete(id: number, path?: string): Promise<Response> {
     return fetch(`${this.buildUrl(path)}/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${this.token}`
+      }
     });
   }
 }
