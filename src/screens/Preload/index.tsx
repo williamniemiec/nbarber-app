@@ -52,11 +52,12 @@ export default PreloadScreen;
 // ----------------------------------------------------------------------------
 async function checkToken(userDispatch: any, navigation: any) {
   const token = await AsyncStorage.getItem('token');
+  console.log(token)
 
   if (token !== null) {
     let json = await authService.refreshToken(token);
 
-    if (json.token) {
+    if (json && json.token) {
       await AsyncStorage.setItem('token', json.token);
 
       userDispatch({

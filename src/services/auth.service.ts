@@ -54,10 +54,16 @@ class AuthService extends Service {
   }
 
   async refreshToken(): Promise<void> {
-    const response = await this.get('refresh');
-    const newToken = await response.json();
+    try {
+      const response = await this.get('refresh');
+      const newToken = await response.json();
 
-    AsyncStorage.setItem('token', newToken.access_token);  }
+      AsyncStorage.setItem('token', newToken.access_token);  
+    }
+    catch (exception) {
+      console.info('Invalid token');
+    }
+  }
 }
 
 export default AuthService;
