@@ -28,41 +28,30 @@ class AuthService extends Service {
   // --------------------------------------------------------------------------
   async signIn(email: string, password: string): Promise<UserDto> {
     const response = await this.post({email, password}, 'signin');
-    const loggedUser = await response.json();
 
-    AsyncStorage.setItem('token', loggedUser.access_token);
-
-    return loggedUser.user;
+    AsyncStorage.setItem('token', response.access_token);
+    
+    return response?.user;
   }
 
-  async signUp(name: string, email: string, password: string): Promise<void> {
+  async signUp(name: string, email: string, password: string): Promise<UserDto> {
     const response = await this.post({name, email, password}, 'signup');
 
-    const createdUser = await response.json();
+    AsyncStorage.setItem('token', response.access_token);
 
-    AsyncStorage.setItem('token', createdUser.access_token);
-
-    return createdUser.json();
+    return response?.user;
   }
 
   async signOut(): Promise<void> {
-    const response = await this.post({}, 'signout');
+    await this.post({}, 'signout');
     
     AsyncStorage.removeItem('token');
-
-    return response.json();
   }
 
   async refreshToken(): Promise<void> {
-    try {
-      const response = await this.get('refresh');
-      const newToken = await response.json();
-
-      AsyncStorage.setItem('token', newToken.access_token);  
-    }
-    catch (exception) {
-      console.info('Invalid token');
-    }
+    const newToken = await this.get('refresh');
+    
+    AsyncStorage.setItem('token', newToken.access_token);  
   }
 }
 

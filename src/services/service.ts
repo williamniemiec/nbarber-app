@@ -8,6 +8,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
  */
 
 import ApiConfig from '../config/api.config';
+import AuthenticationException from "./exceptions/authentication.exception";
+import ApiException from "./exceptions/api.exception";
 
 
 /**
@@ -36,12 +38,44 @@ abstract class Service {
   // ------------------------------------------------------------------------
   //         Methods
   // ------------------------------------------------------------------------
-  protected getById(id: number, path?: string): Promise<Response> {
+  protected async getById(id: number, path?: string): Promise<any> {
     return fetch(`${this.buildUrl(path)}/${id}`, {
-      headers: {
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+      headers: this.buildAuthorizationHeader()
+    })
+      .then(response => this.parseResponse(response))
+      .catch(err => this.parseError(err));
+  }
+
+  private async parseResponse(response: Response): Promise<any> {
+    const jsonResponse = await response.json();
+    
+    console.info('Response', jsonResponse);
+    
+    if (![200, 201, 202, 204].includes(response.status)) {
+      throw new ApiException(jsonResponse.error);
+    }
+
+    return jsonResponse;
+  }
+
+  private parseError(err: any): void {
+    console.error(err);
+
+    if (err === 'Unauthenticated') {
+      throw new AuthenticationException();
+    }
+        
+    throw new ApiException(err);
+  }
+
+  private buildAuthorizationHeader(): HeadersInit_ | undefined {
+    if (!this.token) {
+      return undefined;
+    }
+
+    return {
+      'Authorization': `Bearer ${this.token}`
+    };
   }
 
   private buildUrl(path?: string) {
@@ -52,22 +86,42 @@ abstract class Service {
     return `${this.api}/${this.uri}/${path}`;
   }
 
-  protected get(path?: string): Promise<Response> {
-    return fetch(`${this.buildUrl(path)}`);
+  protected async get(path?: string): Promise<any> {
+    console.info(`GET ${this.buildUrl(path)}`);
+
+    return fetch(`${this.buildUrl(path)}`)
+      .then(response => this.parseResponse(response))
+      .catch(err => this.parseError(err));
   }
 
-  protected post(data: any, path?: string): Promise<Response> {
+  protected async post(data: any, path?: string): Promise<any> {
+    console.info(`POST ${this.buildUrl(path)}`, data);
+
     return fetch(`${this.buildUrl(path)}`, {
       method: 'POST',
       body: JSON.stringify(data),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+      headers: this.buildJsonHeader()
+    })
+      .then(response => this.parseResponse(response))
+      .catch(err => this.parseError(err));
   }
 
-  protected put(data: any, id?: number, path?: string): Promise<Response> {
+  private buildJsonHeader(): HeadersInit_ | undefined {
+    if (!this.token) {
+      return {
+        'Content-type': 'application/json; charset=UTF-8'
+      };
+    }
+
+    return {
+      'Content-type': 'application/json; charset=UTF-8',
+      'Authorization': `Bearer ${this.token}`
+    };
+  }
+
+  protected async put(data: any, id?: number, path?: string): Promise<any> {
+    console.info(`PUT ${this.buildUrl(path)}`, id, data);
+
     let url = `${this.buildUrl(path)}`;
 
     if (id) {
@@ -77,21 +131,23 @@ abstract class Service {
     return fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+      headers: this.buildJsonHeader()
+    })
+      .then(response => this.parseResponse(response))
+      .catch(err => this.parseError(err));
   }
 
-  protected delete(id: number, path?: string): Promise<Response> {
+  protected async delete(id: number, path?: string): Promise<any> {
+    console.info(`DELETE ${this.buildUrl(path)}`, id);
+
     return fetch(`${this.buildUrl(path)}/${id}`, {
       method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${this.token}`
-      }
-    });
+      headers: this.buildAuthorizationHeader()
+    })
+      .then(response => this.parseResponse(response))
+      .catch(err => this.parseError(err));
   }
 }
 
 export default Service;
+

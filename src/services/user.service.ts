@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Service from "./service";
 import UpdateUserDto from "../dto/update-user.dto";
 import BarberDto from "../dto/barber.dto";
@@ -31,25 +30,25 @@ class UserService extends Service {
   async favorite(id: number): Promise<void> {
     const response = await this.post({ barber: id }, 'favorite');
 
-    return response.json();
+    return response;
   }
 
   async getFavorites(): Promise<BarberDto[]> {
     const response = await this.get('favorites');
 
-    return response.json();
+    return response;
   }
 
   async getAppointments(): Promise<UserAppointmentDto[]> {
     const response = await this.get('appointments');
 
-    return response.json();
+    return response;
   }
 
   async updateUser(body: UpdateUserDto): Promise<void> {
     const response = await this.put(body);
 
-    return response.json();
+    return response;
   }
 }
 

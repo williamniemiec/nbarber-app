@@ -29,11 +29,9 @@ const authService = new AuthService();
 const PreloadScreen = () => {
 
   const navigation = useNavigation<StackNavigationProp<any>>();
-
-  const { dispatch: userDispatch } = useContext(UserContext);
   
   useEffect(() => {
-    checkToken(userDispatch, navigation);
+    checkToken(navigation);
   }, []);
 
   return (
@@ -50,28 +48,17 @@ export default PreloadScreen;
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
-async function checkToken(userDispatch: any, navigation: any) {
+async function checkToken(navigation: any) {
   const token = await AsyncStorage.getItem('token');
-  console.log(token)
 
-  if (token !== null) {
-    let json = await authService.refreshToken(token);
-
-    if (json && json.token) {
-      await AsyncStorage.setItem('token', json.token);
-
-      userDispatch({
-        type:'SET_AVATAR',
-        payload:{
-          avatar: json.data.avatar
-        }
-      });
-
+  if (token) {
+    try {
+      await authService.refreshToken();
       navigation.reset({
         routes: [{name:'MainTab'}]
       });
     }
-    else {
+    catch (err) {
       navigation.navigate('SignIn');
     }
   }

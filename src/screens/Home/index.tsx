@@ -153,21 +153,25 @@ async function getBarbers(
 
   let lat = null;
   let lng = null;
+  let city = null;
 
   if (coords) {
     lat = coords.latitude;
     lng = coords.longitude;
   }
+  else if (location) {
+    city = location;
+  }
 
-  let res = await barberService.getBarbers(lat, lng, location);
-  if (res.error == '') {
-    if (res.loc)
-      setLocation(res.loc);
+  const barbers = await barberService.getBarbers(lat, lng, location);
+  if (barbers.error == '') {
+    if (barbers.loc)
+      setLocation(barbers.loc);
 
-    setBarberList(res.data);
+    setBarberList(barbers.data);
   }
   else {
-    Alert.alert('Erro: ' + res.error);
+    Alert.alert('Erro: ' + barbers.error);
   }
 
   setLoading(false);

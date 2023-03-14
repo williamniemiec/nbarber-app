@@ -29,13 +29,13 @@ class BarberService extends Service {
   async getBarbers(lat = null, lng = null, city = null): Promise<BarberDto[]> {
     const response = await this.get(`list?latitude=${lat}&longitude=${lng}&city=${city}`);
 
-    return response.json();
+    return response;
   }
 
   async getBarber(id: number): Promise<BarberDto> {
     const response = await this.get(`${id}`);
 
-    return response.json();
+    return response;
   }
 
   async schedule(
@@ -46,7 +46,7 @@ class BarberService extends Service {
     day: number, 
     hour: string
   ): Promise<void> {
-    const response = await this.post(
+    await this.post(
       {
         service,
         year,
@@ -56,8 +56,6 @@ class BarberService extends Service {
       }, 
       `${userId}/appointment`
     );
-
-    return response.json();
   }
 
   async search(barberName: string): Promise<BarberSearchResultDto> {
