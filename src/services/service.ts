@@ -59,9 +59,9 @@ abstract class Service {
   }
 
   private parseError(err: any): void {
-    console.error(err);
+    console.error(err.message);
 
-    if (err === 'Unauthenticated') {
+    if (err.message.includes('Unauthenticated')) {
       throw new AuthenticationException();
     }
         

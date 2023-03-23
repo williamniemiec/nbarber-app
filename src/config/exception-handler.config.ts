@@ -5,11 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { Alert } from 'react-native';
-
-
 function exceptionHandler(error: Error, isFatal: boolean) {
-  Alert.alert('Error: ' + error);
+  console.error('Error: ' + error);
 }
 
 export default exceptionHandler;

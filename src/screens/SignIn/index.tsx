@@ -75,15 +75,13 @@ async function handleSignIn(
   if (!emailField || !passwordField)
     Alert.alert('Preencha todos os campos');
   else {
-    let json = await authService.signIn(emailField, passwordField);
+    const user = await authService.signIn(emailField, passwordField);
 
-    if (json.token) {
-      await AsyncStorage.setItem('token', json.token);
-      
+    if (user) {
       userDispatch({
         type: 'SET_AVATAR',
         payload: {
-          avatar: json.data.avatar
+          avatar: user.avatar
         }
       });
 
