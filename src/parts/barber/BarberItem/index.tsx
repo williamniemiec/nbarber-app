@@ -18,7 +18,7 @@ import Style from './style';
 const BarberItem = ({ barber, onPress }: BarberItemProps) => (
 
   <TouchableOpacity style={Style.area} onPress={onPress}>
-    <Image style={Style.avatar} source={{uri: barber.avatar}} />
+    <Image style={Style.avatar} source={require(`../../../assets/images/default.png`)} />
     <View style={Style.infoArea}>
       <Text style={Style.userName}>{barber.name}</Text>
       <Stars stars={barber.stars} showNumber={true} />

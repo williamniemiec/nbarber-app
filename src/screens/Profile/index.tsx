@@ -47,10 +47,14 @@ export default ProfileScreen;
 //         Functions
 // ----------------------------------------------------------------------------
 async function handleLogout(navigation: any) {
-  await authService.signOut();
-  await AsyncStorage.removeItem('token');
+  try {
+    await authService.signOut();
+  }
+  finally {
+    await AsyncStorage.removeItem('token');
 
-  navigation.reset({
-    routes:[{name: 'SignIn'}]
-  });
+    navigation.reset({
+      routes:[{name: 'SignIn'}]
+    });
+  }
 };
