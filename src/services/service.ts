@@ -22,7 +22,6 @@ abstract class Service {
   // ------------------------------------------------------------------------
   protected readonly api: string;
   private readonly uri: string;
-  private token?: string | null;
 
 
   // ------------------------------------------------------------------------
@@ -31,7 +30,6 @@ abstract class Service {
   protected constructor(uri: string) {
     this.api = ApiConfig.BASE_URL;
     this.uri = uri;
-    AsyncStorage.getItem('token').then(token => this.token = token);
   }
 
 
@@ -39,8 +37,10 @@ abstract class Service {
   //         Methods
   // ------------------------------------------------------------------------
   protected async getById(id: number, path?: string): Promise<any> {
+    const token = await AsyncStorage.getItem('token');
+
     return fetch(`${this.buildUrl(path)}/${id}`, {
-      headers: this.buildAuthorizationHeader()
+      headers: this.buildAuthorizationHeader(token)
     })
       .then(response => this.parseResponse(response))
       .catch(err => this.parseError(err));
@@ -68,13 +68,13 @@ abstract class Service {
     throw new ApiException(err);
   }
 
-  private buildAuthorizationHeader(): HeadersInit_ | undefined {
-    if (!this.token) {
+  private buildAuthorizationHeader(token: string | null): HeadersInit_ | undefined {
+    if (!token) {
       return undefined;
     }
 
     return {
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${token}`
     };
   }
 
@@ -89,7 +89,12 @@ abstract class Service {
   protected async get(path?: string): Promise<any> {
     console.info(`GET ${this.buildUrl(path)}`);
 
-    return fetch(`${this.buildUrl(path)}`)
+    const token = await AsyncStorage.getItem('token');
+
+    return fetch(`${this.buildUrl(path)}`, {
+        method: 'GET',
+        headers: this.buildJsonHeader(token)
+      })
       .then(response => this.parseResponse(response))
       .catch(err => this.parseError(err));
   }
@@ -97,17 +102,19 @@ abstract class Service {
   protected async post(data: any, path?: string): Promise<any> {
     console.info(`POST ${this.buildUrl(path)}`, data);
 
+    const token = await AsyncStorage.getItem('token');
+
     return fetch(`${this.buildUrl(path)}`, {
       method: 'POST',
       body: JSON.stringify(data),
-      headers: this.buildJsonHeader()
+      headers: this.buildJsonHeader(token)
     })
       .then(response => this.parseResponse(response))
       .catch(err => this.parseError(err));
   }
 
-  private buildJsonHeader(): HeadersInit_ | undefined {
-    if (!this.token) {
+  private buildJsonHeader(token: string | null): HeadersInit_ | undefined {
+    if (!token) {
       return {
         'Content-type': 'application/json; charset=UTF-8'
       };
@@ -115,13 +122,14 @@ abstract class Service {
 
     return {
       'Content-type': 'application/json; charset=UTF-8',
-      'Authorization': `Bearer ${this.token}`
+      'Authorization': `Bearer ${token}`
     };
   }
 
   protected async put(data: any, id?: number, path?: string): Promise<any> {
     console.info(`PUT ${this.buildUrl(path)}`, id, data);
 
+    const token = await AsyncStorage.getItem('token');
     let url = `${this.buildUrl(path)}`;
 
     if (id) {
@@ -131,7 +139,7 @@ abstract class Service {
     return fetch(url, {
       method: 'PUT',
       body: JSON.stringify(data),
-      headers: this.buildJsonHeader()
+      headers: this.buildJsonHeader(token)
     })
       .then(response => this.parseResponse(response))
       .catch(err => this.parseError(err));
@@ -140,9 +148,11 @@ abstract class Service {
   protected async delete(id: number, path?: string): Promise<any> {
     console.info(`DELETE ${this.buildUrl(path)}`, id);
 
+    const token = await AsyncStorage.getItem('token');
+
     return fetch(`${this.buildUrl(path)}/${id}`, {
       method: 'DELETE',
-      headers: this.buildAuthorizationHeader()
+      headers: this.buildAuthorizationHeader(token)
     })
       .then(response => this.parseResponse(response))
       .catch(err => this.parseError(err));
