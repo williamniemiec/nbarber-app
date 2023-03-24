@@ -27,10 +27,10 @@ class BarberService extends Service {
   //         Methods
   // --------------------------------------------------------------------------
   async getBarbers(lat = null, lng = null, city = null): Promise<BarberSearchResultDto> {
-    const latitudeQuery = lat ? `latitude=${lat}` : '';
-    const longitudeQuery = lng ? `longitude=${lng}` : '';
-    const cityQuery = city ? `city=${city}` : '';
-    const response = await this.get(`list?${latitudeQuery}&${longitudeQuery}&${cityQuery}`);
+    const latitudeQuery = lat ? lat : '';
+    const longitudeQuery = lng ? lng : '';
+    const cityQuery = city ? city : '';
+    const response = await this.get(`list?lat=${latitudeQuery}&lgn=${longitudeQuery}&city=${cityQuery}`);
 
     return response;
   }
