@@ -163,15 +163,15 @@ async function getBarbers(
     city = location;
   }
 
-  const barbers = await barberService.getBarbers(lat, lng, location);
-  if (barbers.error == '') {
-    if (barbers.loc)
-      setLocation(barbers.loc);
+  const barbers = await barberService.getBarbers(lat, lng, city);
+  console.log('Barbers: ', barbers);
 
-    setBarberList(barbers.data);
-  }
-  else {
-    Alert.alert('Erro: ' + barbers.error);
+  if (barbers) {
+    if (barbers.location) {
+      setLocation(barbers.location);
+    }
+
+    setBarberList(barbers.barbers);
   }
 
   setLoading(false);
