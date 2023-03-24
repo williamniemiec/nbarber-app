@@ -64,11 +64,8 @@ async function searchBarbers(setLoading: any, setList: any, searchText: string) 
   if (searchText) {
     const res = await barberService.search(searchText);
 
-    if (res.error) {
-      Alert.alert('Error: ', res.error);
-    }
-    else if (res.data && res.data.length > 0) {
-      setList(res.data);
+    if (res) {
+      setList(res);
     }
   }
 
