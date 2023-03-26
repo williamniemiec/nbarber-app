@@ -31,7 +31,7 @@ const SignUpForm = ({
     <NameInput name={name} setName={setName} />
     <EmailInput email={email} setEmail={setEmail} />
     <PasswordInput password={password} setPassword={setPassword} />
-    <FormButton onPress={onSignUp} title="CADASTRAR" />
+    <FormButton onPress={onSignUp} title="SIGN UP" />
   </View>
 );
 

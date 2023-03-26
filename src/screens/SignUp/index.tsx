@@ -51,8 +51,8 @@ const SignUpScreen = () => {
         )}
       />
       <SignMessageButton 
-        message='Já possui uma conta?' 
-        messageHighlighted='Login' 
+        message='You already have an account?' 
+        messageHighlighted='Sign in' 
         onPress={() => handleLogin(navigation)} 
       />
     </SafeAreaView>
@@ -73,24 +73,13 @@ async function handleSignUp(
   userDispatch: any
 ) {
   if (!nameField || !emailField || !passwordField) {
-    Alert.alert('Preencha todos os campos');
+    Alert.alert('Please, fill all fields.');
   }
   else {
-    let json = await authService.signUp(nameField, emailField, passwordField);
+    const user = await authService.signUp(nameField, emailField, passwordField);
 
-    if (json.token) {
-      await AsyncStorage.setItem('token', json.token);
-
-      userDispatch({
-        type:'SET_AVATAR',
-        payload:{
-          avatar: json.data.avatar
-        }
-      });
+    if (user) {
       handleLogin(navigation);
-    }
-    else {
-      Alert.alert('Erro: ' + json.error);
     }
   }
 }

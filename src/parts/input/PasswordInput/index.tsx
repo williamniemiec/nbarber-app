@@ -16,7 +16,7 @@ import PasswordInputProps from '../../../models/password-input-props.model';
 // ----------------------------------------------------------------------------
 const PasswordInput = ({ password, setPassword }: PasswordInputProps) => (
   <SignInput 
-    placeholder='Senha' 
+    placeholder='Password' 
     Icon={LockIcon} 
     secure={true} 
     onChangeText={setPassword} 

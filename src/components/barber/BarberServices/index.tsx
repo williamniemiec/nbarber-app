@@ -21,13 +21,13 @@ const BarberServices = ({ services, handleSchedule }: BarberServicesProps) => {
 
   return (
     <View style={Style.serviceArea}>
-      <Text style={Style.title}>Lista de serviços</Text>
+      <Text style={Style.title}>Services</Text>
       {services.map((item, index) => (
         <View style={Style.serviceItem} key={index}>
           <View style={Style.serviceInfo}>
             <Text style={Style.serviceName}>{item.name}</Text>
             <Text style={Style.servicePrice}>
-              R$ {item.price.toFixed(2)}
+              $ {item.price.toFixed(2)}
             </Text>
           </View>
 
@@ -35,7 +35,7 @@ const BarberServices = ({ services, handleSchedule }: BarberServicesProps) => {
             underlayColor="#ddd"
             style={Style.serviceChooseBtn}
             onPress={() => handleSchedule(index)}>
-            <Text style={Style.serviceChooseBtnText}>Agendar</Text>
+            <Text style={Style.serviceChooseBtnText}>Schedule</Text>
           </TouchableHighlight>
         </View>
       ))}

@@ -27,7 +27,7 @@ const BarberModalService = ({ barber, serviceIndex }: BarberModalServiceProps) =
           {barber.services[serviceIndex].name}
         </Text>
         <Text style={Style.servicePrice}>
-          R$ {barber.services[serviceIndex].price.toFixed(2)}
+          $ {barber.services[serviceIndex].price.toFixed(2)}
         </Text>
       </View>
     </ModalItem>

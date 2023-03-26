@@ -42,6 +42,6 @@ export default FavoritesList;
 
 const NoFavoritesMessage = () => (
   <Text style={Style.warning}>
-    Nenhum favorito
+    There're no favorites.
   </Text>
 );

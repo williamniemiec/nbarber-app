@@ -132,7 +132,7 @@ const BarberModal = ({ show, setShow, barber, serviceIndex }: BarberModalProps) 
             )}
           />
           <FormButton 
-            title="Finalizar Agendamento" 
+            title="Finish" 
             onPress={() => handleFinishButton(
               barber, 
               serviceIndex, 
@@ -218,12 +218,12 @@ async function handleFinishButton(
     
     if (req && req.error === '') {
       setShow(false);
-      Alert.alert('Agendamento feito com sucesso!');
+      Alert.alert('Successfully scheduled!');
       navigation.navigate('Appointments');
     }
   }
   else {
-    Alert.alert('Preencha todos os campos!');
+    Alert.alert('Please, fill all the fields!');
   }
 };
 

@@ -16,7 +16,7 @@ import NameInputProps from '../../../models/name-input-props.model';
 // ----------------------------------------------------------------------------
 const NameInput = ({ name, setName }: NameInputProps) => (
   <SignInput 
-    placeholder='Nome' 
+    placeholder='Name' 
     Icon={EmailIcon} 
     onChangeText={setName} 
     value={name} 

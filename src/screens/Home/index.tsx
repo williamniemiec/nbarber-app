@@ -46,7 +46,7 @@ const HomeScreen = () => {
   
   useEffect(() => {
     getBarbers(coords, location, setLocation, setLoading, setBarberList);
-  }, []);
+  }, [location]);
 
   return (
     <SafeAreaView style={Style.container}>
@@ -66,12 +66,12 @@ const HomeScreen = () => {
           />}
       >
         <SearchHeader 
-          title="Encontre o seu barbeiro favorito" 
+          title="Find your barber" 
           onPress={() => navigation.navigate('Search')} 
         />
         <BarberSearchBar
           value={location}
-          placeholder='Onde você está?'
+          placeholder="Where're you?"
           onChangeText={(text: string) => handleChangeLocation(text, setLocation)}
           onEndEditing={() => handleLocationSearch(
             coords, 
@@ -108,8 +108,6 @@ export default HomeScreen;
 // ----------------------------------------------------------------------------
 function handleChangeLocation(text: string, setLocation: any) {
   setLocation(text);
-  //setCoords({});
-  //getBarbers();
 };
 
 async function handleLocationFinder(

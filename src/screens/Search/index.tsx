@@ -36,7 +36,7 @@ const SearchScreen = () => {
     <SafeAreaView style={Style.container}>
       <SearchBar
         value={searchText}
-        placeholder='Digite o nome do barbeiro'
+        placeholder="Type the barber's name"
         onTextChange={text => setSearchText(text)}
         onEndEditing={() => searchBarbers(setLoading, setList, searchText)}
       />

@@ -44,6 +44,6 @@ export default AppointmentList;
 
 const NoAppointmentsMessage = () => (
   <Text style={Style.warning}>
-    Não há agendamentos
+    There're no appointments
   </Text>
 );

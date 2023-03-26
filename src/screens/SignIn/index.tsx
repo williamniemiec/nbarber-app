@@ -46,8 +46,8 @@ const SignInScreen = () => {
         onSignIn={() => handleSignIn(navigation, emailField, passwordField, userDispatch)}
       />
       <SignMessageButton 
-        message='Ainda não possui uma conta?' 
-        messageHighlighted='Cadastre-se' 
+        message="You don't have an account?" 
+        messageHighlighted='Sign up' 
         onPress={() => handleSignUp(navigation)} 
       />
     </SafeAreaView>
@@ -73,7 +73,7 @@ async function handleSignIn(
   userDispatch: any
 ) {
   if (!emailField || !passwordField)
-    Alert.alert('Preencha todos os campos');
+    Alert.alert('Please, fill all fields');
   else {
     const user = await authService.signIn(emailField, passwordField);
 
@@ -90,7 +90,7 @@ async function handleSignIn(
       });
     }
     else {
-      Alert.alert('Email e/ou senha incorretos!');
+      Alert.alert('Wrong email and / or password!');
     }
   }
 }

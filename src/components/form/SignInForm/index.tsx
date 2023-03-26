@@ -27,7 +27,7 @@ const SignInForm = ({
   <View style={Style.inputArea}>
     <EmailInput email={email} setEmail={setEmail} />
     <PasswordInput password={password} setPassword={setPassword} />
-    <FormButton onPress={onSignIn} title="LOGAR" />
+    <FormButton onPress={onSignIn} title="SIGN IN" />
   </View>
 );
 
