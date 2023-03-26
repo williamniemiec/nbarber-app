@@ -1,6 +1,6 @@
 
 <p align='center'>
-<img src='https://raw.githubusercontent.com/williamniemiec/nbarber-app/.github/main/docs/images/logo/logo.png' alt="logo" />
+<img src='https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/logo/logo.png' alt="logo" />
 </p>
 
 <h1 align='center'>nBarber - APP</h1>
