@@ -63,8 +63,8 @@ class BarberService extends Service {
 
   async search(barberName: string): Promise<BarberSearchResultDto> {
     const response = await this.get(`search?q=${barberName}`);
-
-    return response.json();
+    
+    return response;
   }
 }
 
