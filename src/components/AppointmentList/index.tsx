@@ -32,7 +32,7 @@ const AppointmentList = ({ list, loading }: AppointmentListProps) => {
         <AppointmentItem 
           key={index} 
           barber={item.barber} 
-          dateTime={item.datetime} 
+          dateTime={item.date} 
           service={item.service} 
         />
       ))}
