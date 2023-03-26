@@ -47,7 +47,7 @@ class BarberService extends Service {
     year: number, 
     month: number, 
     day: number, 
-    hour: string
+    hour: string | null
   ): Promise<void> {
     await this.post(
       {

@@ -86,7 +86,7 @@ const BarberModal = ({ show, setShow, barber, serviceIndex }: BarberModalProps) 
 
     setSelectedHour(null);
     setIndexOfSelectedHour(0);
-  }, [selectedDay, show]);
+  }, [selectedDay]);
 
   return (
     <Modal transparent={true} visible={show} animationType='slide'>
@@ -109,16 +109,16 @@ const BarberModal = ({ show, setShow, barber, serviceIndex }: BarberModalProps) 
               setSelectedDay,
               setSelectedHour,
               setIndexOfSelectedHour
-              )}
-              onNextMonth={() => handleNextMonth(
-                selectedMonth,
-                selectedYear, 
-                setSelectedMonth,
-                setSelectedYear,
-                setSelectedDay,
-                setSelectedHour,
-                setIndexOfSelectedHour
-              )}
+            )}
+            onNextMonth={() => handleNextMonth(
+              selectedMonth,
+              selectedYear, 
+              setSelectedMonth,
+              setSelectedYear,
+              setSelectedDay,
+              setSelectedHour,
+              setIndexOfSelectedHour
+            )}
           />
           <BarberModalAvailability 
             listHours={listHours} 
