@@ -193,7 +193,7 @@ function formatDateToIsoFormat(date: Date) {
 function buildDayAvailability(user: any, year: number, month: number, day: number) {
   const date = formatDateToIsoFormat(new Date(year, month, day));
   
-  return user.available.filter((item: any) => item.date === date);
+  return user.availability.filter((item: any) => item.date === date);
 }
 
 async function handleFinishButton(

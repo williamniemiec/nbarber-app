@@ -45,8 +45,8 @@ const HomeScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   
   useEffect(() => {
-    getBarbers(coords, location, setLocation, setLoading, setBarberList);
-  }, [location]);
+    getBarbers(coords, location, setLoading, setBarberList);
+  }, []);
 
   return (
     <SafeAreaView style={Style.container}>
@@ -59,7 +59,6 @@ const HomeScreen = () => {
               setRefreshing, 
               coords, 
               location, 
-              setLocation, 
               setLoading, 
               setBarberList
             )}
@@ -72,12 +71,19 @@ const HomeScreen = () => {
         <BarberSearchBar
           value={location}
           placeholder="Where're you?"
-          onChangeText={(text: string) => handleChangeLocation(text, setLocation)}
+          onChangeText={(text: string) => handleChangeLocation(
+            text, 
+            coords, 
+            setCoords,
+            location, 
+            setLocation, 
+            setLoading, 
+            setBarberList
+          )}
           onEndEditing={() => handleLocationSearch(
             coords, 
             location, 
             setCoords, 
-            setLocation, 
             setLoading, 
             setBarberList
           )}
@@ -106,8 +112,18 @@ export default HomeScreen;
 // ----------------------------------------------------------------------------
 //         Functions
 // ----------------------------------------------------------------------------
-function handleChangeLocation(text: string, setLocation: any) {
+function handleChangeLocation(
+  text: string, 
+  coords: any,
+  setCoords: any,
+  location: any,
+  setLocation: any,
+  setLoading: any,
+  setBarberList: any
+) {
   setLocation(text);
+  setCoords({});
+  getBarbers(coords, location, setLoading, setBarberList);
 };
 
 async function handleLocationFinder(
@@ -135,7 +151,7 @@ async function handleLocationFinder(
         latitude: info.coords.latitude,
         longitude: info.coords.longitude,
       });
-      getBarbers(coords, location, setLocation, setLoading, setBarberList);
+      getBarbers(coords, location, setLoading, setBarberList);
     });
   }
 };
@@ -143,7 +159,6 @@ async function handleLocationFinder(
 async function getBarbers(
   coords: any,
   location: any,
-  setLocation: any,
   setLoading: any,
   setBarberList: any
 ) {
@@ -158,7 +173,8 @@ async function getBarbers(
     lat = coords.latitude;
     lng = coords.longitude;
   }
-  else if (location) {
+  
+  if (location) {
     city = location;
   }
 
@@ -166,10 +182,6 @@ async function getBarbers(
   console.log('Barbers: ', barbers);
 
   if (barbers) {
-    if (barbers.location) {
-      setLocation(barbers.location);
-    }
-
     setBarberList(barbers.barbers);
   }
 
@@ -180,24 +192,22 @@ function handleRefresh(
   setRefreshing: any,
   coords: any,
   location: any,
-  setLocation: any,
   setLoading: any,
   setBarberList: any
 ) {
   setRefreshing(false);
-  getBarbers(coords, location, setLocation, setLoading, setBarberList);
+  getBarbers(coords, location, setLoading, setBarberList);
 };
 
 function handleLocationSearch(
   coords: any,
   location: any,
   setCoords: any,
-  setLocation: any,
   setLoading: any,
   setBarberList: any
 ) {
   setCoords({});
-  getBarbers(coords, location, setLocation, setLoading, setBarberList);
+  getBarbers(coords, location, setLoading, setBarberList);
 }
 
 function handleBarberItem(barberData: BarberDto, navigation: any) {
