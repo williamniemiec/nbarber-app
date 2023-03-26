@@ -61,13 +61,10 @@ const handleRefresh = (setRefreshing: any, setLoading: any, setList: any) => {
 async function getAppointments(setLoading: any, setList: any) {
   setLoading(true);
 
-  const req = await userService.getAppointments();
+  const appointments = await userService.getAppointments();
 
-  if (req.error) {
-    Alert.alert('Error: ' + req.error);
-  } 
-  else if (req.data && req.data.length > 0) {
-    setList(req.data);
+  if (appointments && (appointments.length > 0)) {
+    setList(appointments);
   }
 
   setLoading(false);

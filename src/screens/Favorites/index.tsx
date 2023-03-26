@@ -84,13 +84,10 @@ function handleRefresh(setRefreshing: any, setLoading: any, setList: any) {
 async function getFavorites(setLoading: any, setList: any) {
   setLoading(true);
 
-  const req = await userService.getFavorites();
+  const barbers = await userService.getFavorites();
 
-  if (req.error) {
-    Alert.alert('Error: ' + req.error);
-  } 
-  else if (req.data && req.data.length > 0) {
-    setList(req.data);
+  if (barbers && (barbers.length > 0)) {
+    setList(barbers);
   }
 
   setLoading(false);

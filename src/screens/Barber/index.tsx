@@ -80,14 +80,11 @@ async function getBarberInfo(
   setFavorited: any
 ) {
   setLoading(true);
-  let json = await barberService.getBarber(userInfo.id);
+  const barber = await barberService.getBarber(userInfo.id);
 
-  if (json.data && json.error == '') {
-    setUserInfo(json.data);
-    setFavorited(json.data.favorited);
-  } 
-  else {
-    Alert.alert('Error: ' + json.error);
+  if (barber) {
+    setUserInfo(barber);
+    setFavorited(barber.favorited);
   }
 
   setLoading(false);

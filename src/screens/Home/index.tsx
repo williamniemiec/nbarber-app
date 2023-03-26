@@ -22,6 +22,7 @@ import BarberService from '../../services/barber.service';
 import Style from './style';
 import BarberSearchBar from '../../components/barber/BarberSearchBar';
 import BarbersList from '../../components/barber/BarbersList';
+import BarberDto from '../../dto/barber.dto';
 
 
 // ----------------------------------------------------------------------------
@@ -92,7 +93,7 @@ const HomeScreen = () => {
         <BarbersList 
           list={barberList} 
           loading={loading} 
-          onPress={(item: any) => handleBarberItem(item, navigation)} 
+          onPress={(item: BarberDto) => handleBarberItem(item, navigation)} 
         />
       </ScrollView>
     </SafeAreaView>
@@ -201,6 +202,6 @@ function handleLocationSearch(
   getBarbers(coords, location, setLocation, setLoading, setBarberList);
 }
 
-function handleBarberItem(barberData: any, navigation: any) {
+function handleBarberItem(barberData: BarberDto, navigation: any) {
   navigation.navigate('Barber', barberData);
 }
