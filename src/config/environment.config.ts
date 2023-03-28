@@ -1,6 +1,6 @@
 import environments from "./environments";
 
 
-const environment = environments.DEVELOPMENT;
+const environment = environments.PRODUCTION;
 
 export default environment;

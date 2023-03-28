@@ -2,7 +2,7 @@ import ApiConfig from "../../models/api-config.model";
 
 
 const ProductionApiConfig: ApiConfig = {
-  BASE_URL: 'http://10.0.2.2:8000/api',
+  BASE_URL: 'https://wniemiec-api-nbarber.onrender.com/api',
   REQUEST_TIMEOUT: 500000
 };
 
