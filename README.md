@@ -56,17 +56,17 @@ Type in your terminal:
 
 <div style="display: flex; flex-direction: row; justify-content: center; align-items: center; flex-wrap: wrap">
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/screens/home.png" alt="home screen" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/master/docs/images/screens/home.png" alt="home screen" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/screens/barber.png" alt="barber screen" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/master/docs/images/screens/barber.png" alt="barber screen" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/screens/barber-agenda.png" alt="barber agenda screen" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/master/docs/images/screens/barber-agenda.png" alt="barber agenda screen" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/screens/favorites.png" alt="favorites screen" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/master/docs/images/screens/favorites.png" alt="favorites screen" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/screens/search.png" alt="search screen" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/master/docs/images/screens/search.png" alt="search screen" />
 
-<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/main/docs/images/screens/appointmnents.png" alt="appointments screen" />
+<img height=400 src="https://raw.githubusercontent.com/williamniemiec/nbarber-app/master/docs/images/screens/appointments.png" alt="appointments screen" />
 </div>
 
 
